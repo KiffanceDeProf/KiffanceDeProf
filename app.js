@@ -15,4 +15,6 @@ app.configure(function() {
 
 
 routes.setup(app);
-app.listen(1337 || process.env.PORT);
+app.listen(1337 || process.env.PORT, function() {
+  console.log("Server running on port", 1337 || process.env.PORT);
+});

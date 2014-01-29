@@ -29,8 +29,9 @@ module.exports = function(grunt) {
         "Gruntfile.js",
         "app.js",
         "lib/*.js",
-        "<%= project.clientSrc %>/js/{,*/}.js"
-      ]
+        "<%= project.clientSrc %>/js/{*,*/}.js"
+      ],
+      client: "<%= project.clientSrc %>/js/{*,*/}.js"
     },
     clean: { // Clean
       dist: ["<%= project.clientDist %>/*"]
@@ -42,8 +43,7 @@ module.exports = function(grunt) {
         removeAttributeQuotes: true,
         removeRedundantAttributes: true,
         useShortDoctype: true,
-        removeEmptyAttributes: true,
-        removeOptionalTags: true
+        removeEmptyAttributes: true
       },
       dist: {
         files: [{
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: "<%= project.clientSrc %>/css",
-          src: "*.css",
+          src: "**/*.css",
           dest: "<%= project.clientDist %>/css"
         }]
       },
@@ -85,20 +85,54 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: "<%= project.clientSrc %>",
-          src: "/images/*",
+          src: "**/*.js",
           dest: "<%= project.clientDist %>"
+        }]
+      },
+      scripts: { // Copie les scripts sans minimification
+        files: [{
+          expand: true,
+          cwd: "<%= project.clientSrc %>/js",
+          src: "**/*.js",
+          dest: "<%= project.clientDist %>/js"
         }]
       }
     },
     concurrent: { // Pour lancer plusieurs tasks à la fois
-      server: [
-
+      dev: [
+        "copy:styles",
+        "htmlmin:dist",
+        "copy:scripts"
       ],
       dist: [
         "cssmin:dist",
         "htmlmin:dist",
         "uglify:dist"
+      ],
+      server: [ // Start server & watch files change
+        "watch",
+        "server:dev"
       ]
+    },
+    watch: {
+      options: {
+        livereload: true
+      },
+      scripts: {
+        files: "<%= project.clientSrc %>/js/{*,*/}.js",
+        tasks: ["jshint:client", "copy:scripts"]
+      },
+      styles: {
+        files: "<%= project.clientSrc %>/css/{*,*/}.css",
+        tasks: ["copy:styles"]
+      },
+      html: {
+        files: "<%= project.clientSrc %>/*.html",
+        tasks: ["htmlmin:dist"]
+      },
+      other: {
+        files: ["<%= project.clientSrc %>/images/*"]
+      }
     }
   });
   
@@ -108,5 +142,17 @@ module.exports = function(grunt) {
     "jshint:all",
     "concurrent:dist",
     "copy:dist"
+  ]);
+
+  grunt.registerTask("server", function() {
+    require("./app");
+  });
+
+  grunt.registerTask("dev", [
+    "clean:dist",
+    "jshint:all",
+    "concurrent:dev",
+    "server",
+    "watch"
   ]);
 };

@@ -1,5 +1,5 @@
 "use strict";
 
-(function() { 
+(function() {
   console.log("Some JS code");
 })();
