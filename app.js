@@ -33,4 +33,5 @@ app.listen(1337 || process.env.PORT, function() {
   console.log("✔ Server running on port", 1337 || process.env.PORT);
 });
 
-console.log(mongoose);
+
+console.log("✔ Schemas loaded:", Object.keys(schemas));
