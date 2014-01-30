@@ -2,8 +2,22 @@
 
 var express = require("express"),
     app = express(),
-    routes = require("./routes");
+    routes = require("./lib/routes"),
+    mongoose = require("mongoose"),
+    schemas = require("./lib/schemas")(mongoose);
 
+mongoose.connect("mongodb://localhost/test");
+
+var db = mongoose.connection;
+
+db.on("error", function() {
+  console.error("✖ Failed to connect to MongoDB");
+});
+
+db.on("open", function() {
+  console.log("✔ Connected to MongoDB");
+  // require("./lib/fillDatabase")(mongoose); // Uncomment on first run --> TODO
+});
 
 app.configure(function() {
   app.use(express.logger());
@@ -16,5 +30,7 @@ app.configure(function() {
 
 routes.setup(app);
 app.listen(1337 || process.env.PORT, function() {
-  console.log("Server running on port", 1337 || process.env.PORT);
+  console.log("✔ Server running on port", 1337 || process.env.PORT);
 });
+
+console.log(mongoose);
