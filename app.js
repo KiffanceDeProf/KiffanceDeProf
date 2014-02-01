@@ -1,10 +1,16 @@
+/**
+ * Main app
+ * @file app.js
+ */
+
 "use strict";
 
 var express = require("express"),
     app = express(),
     routes = require("./lib/routes"),
     mongoose = require("mongoose"),
-    schemas = require("./lib/schemas")(mongoose);
+    schemas = require("./lib/schemas")(mongoose),
+    handlers = require("./lib/handlers");
 
 mongoose.connect("mongodb://localhost/test");
 
@@ -20,6 +26,7 @@ db.on("open", function() {
 });
 
 app.configure(function() {
+  app.set("handlers", handlers);
   app.use(express.logger());
   app.use(express.compress());
   app.use(express.cookieParser("wow. such encryption key.")); // On va avoir besoin de Cookies !
