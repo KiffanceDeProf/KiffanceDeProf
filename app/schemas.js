@@ -28,12 +28,19 @@ module.exports = function(mongoose) {
         required: true
       }
     },
-    course: ObjectId,
+    course: {
+      type: ObjectId,
+      default: null,
+      ref: "Course"
+    },
     description: {
       type: String,
-      default: ""
+      default: null
     },
-    attributes: [ObjectId]
+    attributes: [{
+      type: ObjectId,
+      ref: Attribute
+    }]
   });
 
   Student.virtual("name.full").get(function() {
@@ -46,10 +53,34 @@ module.exports = function(mongoose) {
     }
   });
 
+  // Student.path("course").validate(function(value, cb) {
+  //   if(value) {
+  //     mongoose.models.Course.find({_id: value}, function(err, result) {
+  //       if(err || !result || result.length === 0) {
+  //         cb(false);
+  //       }
+  //       else {
+  //         cb(true);
+  //       }
+  //     }, "Course does not exists!");
+  //   }
+  //   else {
+  //     cb(true);
+  //   }
+  // });
+
   var Course = new Schema({
-    name: String,
+    name: {
+      type: String,
+      required: true
+    },
     description: String,
-    type: Number
+    type: {
+      type: Number,
+      min: 4,
+      max: 6,
+      required: true
+    }
   });
 
   var Game = new Schema({

@@ -16,9 +16,20 @@ exports.setup = function setup(app) {
 
     [apiPath + "/students", "students#list", "auth#init", "get"],
     [apiPath + "/students", "students#create", "auth#init", "auth#isAdmin", "post"],
-    [apiPath + "/students/:id", "students#find", "auth#init", "get"],
-    [apiPath + "/students/:id", "students#update", "auth#init", "auth#isAdmin", "put"],
-    [apiPath + "/students/:id", "students#delete", "auth#init", "auth#isAdmin", "delete"]
+    [apiPath + "/students/:studentId", "students#find", "auth#init", "get"],
+    [apiPath + "/students/:studentId", "students#update", "auth#init", "auth#isAdmin", "put"],
+    [apiPath + "/students/:studentId", "students#delete", "auth#init", "auth#isAdmin", "delete"],
+
+    [apiPath + "/courses", "courses#list", "auth#init", "get"],
+    [apiPath + "/courses", "courses#create", "auth#init", "auth#isAdmin", "post"],
+    [apiPath + "/courses/:courseId", "courses#find", "auth#init", "get"],
+    [apiPath + "/courses/:courseId", "courses#update", "auth#init", "auth#isAdmin", "put"],
+    [apiPath + "/courses/:courseId", "courses#delete", "auth#init", "auth#isAdmin", "delete"],
+
+    [apiPath + "/courses/:courseId/students", "courses#getStudents", "auth#init", "get"],
+    [apiPath + "/courses/:courseId/students/:studentId", "courses#findStudent", "auth#init", "get"],
+    [apiPath + "/courses/:courseId/students/:studentId", "courses#expelStudent", "auth#init", "auth#isAdmin", "delete"],
+    [apiPath + "/courses/:courseId/students/:studentId", "courses#addStudent", "auth#init", "auth#isAdmin", "post"]
   ];
 
   expressPath(app, routes, { verbose: (app.settings.env === "development") });

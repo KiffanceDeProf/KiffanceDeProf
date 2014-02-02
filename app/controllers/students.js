@@ -23,8 +23,9 @@ module.exports = {
     var postData = req.body;
     var newStudent = new Student();
 
-    newStudent.fullName = postData.name.full || undefined;
-    newStudent.description = postData.description || undefined;
+    newStudent.name.full = postData.fullName || null;
+    newStudent.description = postData.description || null;
+    newStudent.course = postData.course || null;
     newStudent.save(function(err) {
       if(err) {
         res.json(400, {
@@ -41,8 +42,8 @@ module.exports = {
    * Get one Student
    */
   find: function(req, res, next) {
-    if(req.params.id) {
-      Student.findOne({ _id: req.params.id }, function(err, result) {
+    if(req.params.studentId) {
+      Student.findOne({ _id: req.params.studentId }, function(err, result) {
         if(err) {
           next(err);
           return;
@@ -69,8 +70,8 @@ module.exports = {
    */
   update: function(req, res, next) {
     var postData = req.body;
-    if(req.params.id) {
-      Student.findOne({ _id: req.params.id }, function(err, result) {
+    if(req.params.studentId) {
+      Student.findOne({ _id: req.params.studentId }, function(err, result) {
         if(err) {
           next(err);
           return;
@@ -81,13 +82,15 @@ module.exports = {
           });
         }
         else {
-          result.name.full = postData.fullName || result.name.full;
-          result.description = postData.description || result.description;
+          if("fullName" in postData) { result.name.full = postData.fullName || null; }
+          if("description" in postData) { result.description = postData.description || null; }
+          if("course" in postData) { result.course = postData.course || null; }
 
           result.save(function(err) {
             if(err) {
               res.json(400, {
-                error: "bad request"
+                error: "bad request",
+                details: err
               });
               return;
             }
@@ -103,8 +106,8 @@ module.exports = {
    * Delete one student
    */
   delete: function(req, res) {
-    if(req.params.id) {
-      Student.remove({ _id: req.params.id }, function(err) {
+    if(req.params.studentId) {
+      Student.remove({ _id: req.params.studentId }, function(err) {
         if(err) {
           res.json(404, {
             message: "not found"
