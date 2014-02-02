@@ -19,12 +19,31 @@ module.exports = function(mongoose) {
 
   var Student = new Schema({
     name: {
-      first: String,
-      last: String
+      first: {
+        type: String,
+        required: true
+      },
+      last: {
+        type: String,
+        required: true
+      }
     },
     course: ObjectId,
-    description: String,
+    description: {
+      type: String,
+      default: ""
+    },
     attributes: [ObjectId]
+  });
+
+  Student.virtual("name.full").get(function() {
+    return this.name.first + " " + this.name.last;
+  }).set(function (name) {
+    if(name) {
+      var split = name.split(" ");
+      this.name.first = split[0];
+      this.name.last = split[1];
+    }
   });
 
   var Course = new Schema({

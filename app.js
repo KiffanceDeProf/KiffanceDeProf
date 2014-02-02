@@ -21,7 +21,6 @@ db.on("error", function() {
 
 db.on("open", function() {
   console.log("✔ Connected to MongoDB");
-  // require("./lib/fillDatabase")(mongoose); // Uncomment on first run --> TODO
 });
 
 app.configure(function() {
@@ -32,6 +31,9 @@ app.configure(function() {
   app.use(express.logger("tiny"));
   app.use(express.compress());
   app.use(express.cookieParser("wow. such encryption key.")); // On va avoir besoin de Cookies !
+  app.use(express.bodyParser());
+  app.use(express.json());
+  app.use(express.urlencoded());
   app.use(app.router);
   app.use(express.static(__dirname + "/public")); // Pour le contenu static
 });
