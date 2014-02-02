@@ -8,9 +8,8 @@
 var express = require("express"),
     app = express(),
     mongoose = require("mongoose"),
-    schemas = require("./lib/schemas")(mongoose),
-    routes = require("./lib/routes"),
-    handlers = require("./lib/handlers");
+    schemas = require("./app/schemas")(mongoose),
+    routes = require("./app/routes");
 
 mongoose.connect("mongodb://localhost/test");
 
@@ -26,9 +25,9 @@ db.on("open", function() {
 });
 
 app.configure(function() {
-  app.set("handlers", handlers);
   app.set("schemas", schemas);
   app.set("mongoose", mongoose);
+  app.set("api path", "/api");
 
   app.use(express.logger("tiny"));
   app.use(express.compress());

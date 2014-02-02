@@ -8,7 +8,8 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON("package.json"),
     project: { // Variables du projet
       clientSrc: "client/",
-      clientDist: "public/"
+      clientDist: "public/",
+      appDir: "app/"
     },
     uglify: { // Minimification JS
       dist: {
@@ -28,7 +29,7 @@ module.exports = function(grunt) {
       all: [
         "Gruntfile.js",
         "app.js",
-        "lib/*.js",
+        "<%= project.appDir %>/{*,*/}.js",
         "<%= project.clientSrc %>/js/{*,*/}.js"
       ],
       client: "<%= project.clientSrc %>/js/{*,*/}.js"

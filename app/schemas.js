@@ -1,6 +1,6 @@
 /**
  * Mongoose database schemas
- * @file lib/schemas.js
+ * @file app/schemas.js
  */
 
 "use strict";

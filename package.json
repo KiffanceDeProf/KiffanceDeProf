@@ -17,7 +17,8 @@
   },
   "dependencies": {
     "express": "~3.4.8",
-    "mongoose": "~3.8.5"
+    "mongoose": "~3.8.5",
+    "express-path": "~0.2.3"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
