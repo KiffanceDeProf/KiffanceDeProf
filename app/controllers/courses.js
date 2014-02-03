@@ -151,7 +151,7 @@ module.exports = {
           });
         }
         else {
-          Student.findOne({ _id: req.params.courseId }, function(err2, student) {
+          Student.findOne({ _id: req.params.studentId }, function(err2, student) {
             if(err2) {
               next(err2);
               return;
