@@ -1,17 +1,16 @@
 /**
- * Students Resource API
- * @file app/contollers/students.js
+ * Attributes Resource API
+ * @file app/contollers/attributes.js
  */
 
 "use strict";
 
 var mongoose = require("mongoose"),
-    Student = mongoose.models.Student,
     Attribute = mongoose.models.Attribute;
 
 module.exports = {
   list: function(req, res, next) {
-    Student.find().exec(function(err, result) {
+    Attribute.find().exec(function(err, result) {
       if(err) {
         next(err);
         return;
@@ -22,13 +21,14 @@ module.exports = {
   },
   create: function(req, res) {
     var postData = req.body;
-    var newStudent = new Student();
+    var newAttribute = new Attribute();
 
-    newStudent.name.full = postData.fullName || null;
-    newStudent.description = postData.description || null;
-    newStudent.course = postData.course || null;
-    newStudent.attributes = postData.attributes || null;
-    newStudent.save(function(err) {
+    newAttribute.name = postData.name || null;
+    newAttribute.description = postData.description || null;
+    newAttribute.type = postData.type || null;
+    newAttribute.map = postData.map || null;
+    newAttribute.data = postData.data || null;
+    newAttribute.save(function(err) {
       if(err) {
         res.json(400, {
           error: "bad request"
@@ -36,16 +36,16 @@ module.exports = {
         return;
       }
 
-      res.json(newStudent);
+      res.json(newAttribute);
     });
   },
 
   /**
-   * Get one Student
+   * Get one Attribute
    */
   find: function(req, res, next) {
-    if(req.params.studentId) {
-      Student.findOne({ _id: req.params.studentId }).populate("attributes.attribute").exec(function(err, result) {
+    if(req.params.AttributeId) {
+      Attribute.findOne({ _id: req.params.AttributeId }, function(err, result) {
         if(err) {
           next(err);
           return;
@@ -68,12 +68,12 @@ module.exports = {
   },
 
   /**
-   * Update (PUT) one student
+   * Update (PUT) one Attribute
    */
   update: function(req, res, next) {
     var postData = req.body;
-    if(req.params.studentId) {
-      Student.findOne({ _id: req.params.studentId }, function(err, result) {
+    if(req.params.AttributeId) {
+      Attribute.findOne({ _id: req.params.AttributeId }, function(err, result) {
         if(err) {
           next(err);
           return;
@@ -84,10 +84,11 @@ module.exports = {
           });
         }
         else {
-          if("fullName" in postData) { result.name.full = postData.fullName || null; }
+          if("name" in postData) { result.name.full = postData.name || null; }
           if("description" in postData) { result.description = postData.description || null; }
-          if("course" in postData) { result.course = postData.course || null; }
-          if("attributes" in postData) { result.attributes = postData.attributes || null; }
+          if("type" in postData) { result.type = postData.type || null; }
+          if("map" in postData) { result.map = postData.map || null; }
+          if("data" in postData) { result.data = postData.data || null; }
 
           result.save(function(err) {
             if(err) {
@@ -106,11 +107,11 @@ module.exports = {
   },
 
   /**
-   * Delete one student
+   * Delete one Attribute
    */
   delete: function(req, res) {
-    if(req.params.studentId) {
-      Student.remove({ _id: req.params.studentId }, function(err) {
+    if(req.params.AttributeId) {
+      Attribute.remove({ _id: req.params.AttributeId }, function(err) {
         if(err) {
           res.json(404, {
             message: "not found"

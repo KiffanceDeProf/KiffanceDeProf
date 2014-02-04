@@ -8,7 +8,7 @@
 var express = require("express"),
     app = express(),
     mongoose = require("mongoose"),
-    schemas = require("./app/schemas")(mongoose),
+    models = require("./app/models")(mongoose),
     routes = require("./app/routes");
 
 mongoose.connect("mongodb://localhost/test");
@@ -24,7 +24,7 @@ db.on("open", function() {
 });
 
 app.configure(function() {
-  app.set("schemas", schemas);
+  app.set("models", models);
   app.set("mongoose", mongoose);
   app.set("api path", "/api");
 

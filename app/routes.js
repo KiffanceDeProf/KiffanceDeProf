@@ -29,7 +29,13 @@ exports.setup = function setup(app) {
     [apiPath + "/courses/:courseId/students", "courses#getStudents", "auth#init", "get"],
     [apiPath + "/courses/:courseId/students/:studentId", "courses#findStudent", "auth#init", "get"],
     [apiPath + "/courses/:courseId/students/:studentId", "courses#expelStudent", "auth#init", "auth#isAdmin", "delete"],
-    [apiPath + "/courses/:courseId/students/:studentId", "courses#addStudent", "auth#init", "auth#isAdmin", "post"]
+    [apiPath + "/courses/:courseId/students/:studentId", "courses#addStudent", "auth#init", "auth#isAdmin", "post"],
+
+    [apiPath + "/attributes", "attributes#list", "auth#init", "get"],
+    [apiPath + "/attributes", "attributes#create", "auth#init", "auth#isAdmin", "post"],
+    [apiPath + "/attributes/:attributeId", "attributes#find", "auth#init", "get"],
+    [apiPath + "/attributes/:attributeId", "attributes#update", "auth#init", "auth#isAdmin", "put"],
+    [apiPath + "/attributes/:attributeId", "attributes#delete", "auth#init", "auth#isAdmin", "delete"],
   ];
 
   expressPath(app, routes, { verbose: (app.settings.env === "development") });
