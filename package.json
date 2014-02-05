@@ -18,7 +18,14 @@
   "dependencies": {
     "express": "~3.4.8",
     "mongoose": "~3.8.5",
-    "express-path": "~0.2.3"
+    "express-path": "~0.2.3",
+    "passport": "~0.2.0",
+    "passport-local": "~0.1.6",
+    "passport-facebook": "~1.0.2",
+    "passport-google": "~0.3.0",
+    "passport-twitter": "~1.0.2",
+    "bcrypt": "~0.7.7",
+    "passport-http-bearer": "~1.0.1"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

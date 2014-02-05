@@ -26,11 +26,6 @@ module.exports = function(mongoose) {
     data: Schema.Types.Mixed
   });
 
-  AttributeSchema.path("map").validate(function(value) {
-    console.log(value);
-    return true;
-  });
-
   var AttributeModel = mongoose.model("Attribute", AttributeSchema);
 
   return AttributeModel;

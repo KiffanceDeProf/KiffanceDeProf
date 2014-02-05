@@ -5,6 +5,8 @@
 
 "use strict";
 
+var passport = require("passport");
+
 module.exports = {
   init: function(req, res, next) { // Init auth infos
     // @TODO: Authentificate the user using
@@ -46,7 +48,7 @@ module.exports = {
     next();
   },
   login: function(req, res, next) {
-    if(req.userAuth.logged) {
+    if(req.user) {
       next();
     }
     else {
@@ -54,11 +56,16 @@ module.exports = {
     }
   },
   isAdmin: function(req, res, next) {
-    if(req.userAuth.admin) {
+    if(req.user && req.user.rank === "admin") {
       next();
     }
     else {
       res.json(401, { error: "unaturhorized" });
     }
-  }
+  },
+
+  // Passport login handlers
+  localRegister: passport.authenticate("local-register"),
+  localLogin: passport.authenticate("local-login"),
+  bearerAuth: passport.authenticate("bearer")
 };

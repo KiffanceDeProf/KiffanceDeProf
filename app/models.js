@@ -7,7 +7,7 @@
 
 module.exports = function(mongoose) {
 
-  var modelsToLoad = ["Student", "Course", "Game", "Attribute"];
+  var modelsToLoad = ["Student", "Course", "Game", "Attribute", "User"];
   var models = {};
 
   for(var i = 0, len = modelsToLoad.length, modelName; i < len; i++) {
