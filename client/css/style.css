@@ -2,5 +2,22 @@ h1 {
   font-family: arial;
   font-size: 48px;
   color: #555;
-  margin: 100px;
+  margin: 10px;
+}
+
+div {
+  border: 1px black dashed;
+}
+
+div#listes {
+  width: 300px;
+  display: inline-block;
+}
+
+div#editeur {
+  display: inline-block;
+}
+
+.hidden {
+  display: none;
 }
