@@ -8,8 +8,7 @@
 var expressPath = require("express-path");
 
 exports.setup = function setup(app) {
-  var apiPath = app.get("api path"),
-      passport = app.get("passport");
+  var apiPath = app.get("api path");
   var routes = [
     [apiPath + "/", "general#apiInfo", "auth#bearerAuth", "get"],
     [apiPath + "/user/me", "users#me", "auth#bearerAuth", "get"],
