@@ -49,9 +49,15 @@ module.exports = function(mongoose) {
     return this.name.first + " " + this.name.last;
   }).set(function (name) {
     if(name) {
-      var split = name.split(" ");
-      this.name.first = split[0];
-      this.name.last = split[1];
+      //pour les noms composés type "Henry De La Turbidière"
+      var idx = name.indexOf(" ");
+      if(idx !== -1) {
+        this.name.first = name.substr(0,idx); //avant l'espace
+        this.name.last = name.substr(idx+1); //après l'espace
+      } else { //pas de nom de famille (-1) ?
+        this.name.first = name;
+        this.name.last = "";
+      }
     }
   });
 
