@@ -16,7 +16,7 @@ module.exports = function(mongoose) {
     description: String,
     type: {
       type: Number,
-      min: 4,
+      min: 3,
       max: 6,
       required: true
     }
