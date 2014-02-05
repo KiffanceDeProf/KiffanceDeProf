@@ -6,20 +6,20 @@
 "use strict";
 
 var LocalStrategy = require("passport-local").Strategy,
-    BearerStrategy = require("passport-http-bearer").Strategy,
-    FacebookStrategy = require("passport-facebook").Strategy,
-    TwitterStrategy = require("passport-twitter").Strategy,
-    GoogleStrategy = require("passport-google").Strategy;
+    BearerStrategy = require("passport-http-bearer").Strategy;
+    // FacebookStrategy = require("passport-facebook").Strategy,
+    // TwitterStrategy = require("passport-twitter").Strategy,
+    // GoogleStrategy = require("passport-google").Strategy;
 
 module.exports.setup = function(passport, mongoose) {
   var User = mongoose.models.User;
 
   passport.serializeUser(function(user, done) {
-    done (null, user._id);
+    done (null, user);
   });
 
-  passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
+  passport.deserializeUser(function(user, done) {
+    User.findById(user._id, function(err, user) {
       done(err, user);
     });
   });
@@ -29,12 +29,13 @@ module.exports.setup = function(passport, mongoose) {
    * Bearer Strategy for API auth
    */
   passport.use(new BearerStrategy(function(token, done) {
+    console.log(token);
     User.findOne({ bearerToken: token }, function(err, user) {
       if (err) {
         return done(err);
       }
       else if(!user) {
-        return done(null, false);
+        return done(null, {});
       }
       else {
         return done(null, user);

@@ -48,7 +48,7 @@ module.exports = {
     next();
   },
   login: function(req, res, next) {
-    if(req.user) {
+    if(req.user || (req.userAuth && req.userAuth.logged === true)) {
       next();
     }
     else {
@@ -56,7 +56,7 @@ module.exports = {
     }
   },
   isAdmin: function(req, res, next) {
-    if(req.user && req.user.rank === "admin") {
+    if((req.user && req.user.rank === "admin") || (req.userAuth && req.userAuth.admin === true)) {
       next();
     }
     else {
