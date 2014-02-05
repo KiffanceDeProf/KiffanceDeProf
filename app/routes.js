@@ -44,16 +44,5 @@ exports.setup = function setup(app) {
 
   expressPath(app, routes, { verbose: (app.settings.env === "development") });
 
-  // Passport routes
-  app.post(apiPath + "/auth/local/register", passport.authenticate("local-register", {
-    successRedirect: "/auth/local/register/success",
-    failureRedirect: "/auth/local/register/failure"
-  }));
-
-  app.post(apiPath + "/auth/local/login", passport.authenticate("local-login", {
-    successRedirect: "/auth/local/login/success",
-    failureRedirect: "/auth/local/login/failure"
-  }));
-
   console.log("✔ Routes loaded");
 };
