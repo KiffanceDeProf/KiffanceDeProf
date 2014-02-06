@@ -1,3 +1,7 @@
 .hidden {
   display: none;
 }
+
+.cell-id {
+  font-family: monospace;
+}

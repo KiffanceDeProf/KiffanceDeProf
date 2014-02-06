@@ -10,9 +10,14 @@
       <h1>La salle des profs</h1>
       <div  id="listes">
           <h3>Classes</h3>
-          <table class="table">
+          <table class="table table-hover">
             <thead>
-              <tr><th>ID</th><th>Name</th><th>Description</th><th>Type</th></tr>
+              <tr>
+                <th width="20%">ID</th>
+                <th width="20%">Name</th>
+                <th width="40%">Description</th>
+                <th width="20%">Type</th>
+              </tr>
             </thead>
             <tbody id="listCourses">
 
@@ -21,9 +26,14 @@
           <a href="#">Ajouter une classe</a>
           <hr />
           <h3>Élèves</h3>
-          <table class="table">
+          <table class="table table-hover">
             <thead>
-              <tr><th>ID</th><th>Name</th><th>Description</th><th>Course ID</th></tr>
+              <tr>
+                <th width="20%">ID</th>
+                <th width="20%">Name</th>
+                <th width="40%">Description</th>
+                <th width="20%">Course ID</th>
+              </tr>
             </thead>
             <tbody id="listStudents">
 
@@ -86,6 +96,38 @@
         </form>
       </div>
     </div>
+
+    <!-- Templates -->
+    <script type="text/html" id="templateStudents">
+    {{#students}}
+      <tr data-id="{{_id}}">
+        <td class="cell-id">{{_id}}</td>
+        <td>{{name.last}}, {{name.first}}</td>
+        <td>{{description}}</td>
+        <td class="cell-id">{{course}}</td>
+      </tr>
+    {{/students}}
+    {{^students}}
+      <tr>
+        <td colspan="4" class="text-danger">Aucun students trouvé... :(</td>
+      </tr>
+    {{/students}}
+    </script>
+    <script type="text/html" id="templateCourses">
+    {{#courses}}
+      <tr data-id="{{_id}}">
+        <td class="cell-id">{{_id}}</td>
+        <td>{{name}}</td>
+        <td>{{description}}</td>
+        <td>{{type}}ème</td>
+      </tr>
+    {{/courses}}
+    {{^courses}}
+      <tr>
+        <td colspan="4" class="text-danger">Aucune classe trouvé... :(</td>
+      </tr>
+    {{/courses}}
+    </script>
     <script src="libs/mustache/mustache.js"></script>
     <script src="js/script.js"></script>
   </body>
