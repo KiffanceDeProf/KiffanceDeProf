@@ -25,7 +25,8 @@
     "passport-google": "~0.3.0",
     "passport-twitter": "~1.0.2",
     "bcrypt": "~0.7.7",
-    "passport-http-bearer": "~1.0.1"
+    "passport-http-bearer": "~1.0.1",
+    "bower": "~1.2.8"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

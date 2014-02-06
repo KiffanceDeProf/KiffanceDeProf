@@ -2,20 +2,34 @@
 <html>
   <head>
     <title>Salle des profs</title>
+    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <div id="main">
+    <div id="main" class="container">
       <h1>La salle des profs</h1>
-      <div id="listes">
+      <div  id="listes">
           <h3>Classes</h3>
-          <ul id="listCourses">
-            <li data-id="0">Ajouter une classe</li>
-          </ul>
+          <table class="table">
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Description</th><th>Type</th></tr>
+            </thead>
+            <tbody id="listCourses">
+
+            </tbody>
+          </table>
+          <a href="#">Ajouter une classe</a>
+          <hr />
           <h3>Élèves</h3>
-          <ul id="listStudents">
-            <li data-id="0">Ajouter un élève</li>
-          </ul>
+          <table class="table">
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Description</th><th>Course ID</th></tr>
+            </thead>
+            <tbody id="listStudents">
+
+            </tbody>
+          </table>
+          <a href="#">Ajouter un élève</a>
       </div>
       <div id="editeur">
         <form action="#" method="POST" id="formClass" class="hidden">
@@ -72,6 +86,7 @@
         </form>
       </div>
     </div>
+    <script src="libs/mustache/mustache.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>

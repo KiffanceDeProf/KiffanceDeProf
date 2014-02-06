@@ -1,0 +1,18 @@
+{
+  "name": "KiffanceDeProf",
+  "version": "0.0.1",
+  "homepage": "https://github.com/KiffanceDeProf/KiffanceDeProf",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "client/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.0",
+    "mustache": "~0.8.1"
+  }
+}

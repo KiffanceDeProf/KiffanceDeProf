@@ -82,6 +82,14 @@ module.exports = function(grunt) {
           dest: "<%= project.clientDist %>/css"
         }]
       },
+      bower: {
+        files: [{
+          expand: true,
+          cwd: "<%= project.clientSrc %>/bower_components",
+          src: "**/*.*",
+          dest: "<%= project.clientDist %>/libs"
+        }]
+      },
       dist: { // A définir, pour les ressources n'ayant besoin d'aucunes compilation
         files: [{
           expand: true,
@@ -103,12 +111,14 @@ module.exports = function(grunt) {
       dev: [
         "copy:styles",
         "htmlmin:dist",
-        "copy:scripts"
+        "copy:scripts",
+        "copy:bower"
       ],
       dist: [
         "cssmin:dist",
         "htmlmin:dist",
-        "uglify:dist"
+        "uglify:dist",
+        "copy:bower"
       ],
       server: [ // Start server & watch files change
         "watch",
@@ -141,8 +151,7 @@ module.exports = function(grunt) {
   grunt.registerTask("build", [
     "clean:dist",
     "jshint:all",
-    "concurrent:dist",
-    "copy:dist"
+    "concurrent:dist"
   ]);
 
   grunt.registerTask("server", function() {

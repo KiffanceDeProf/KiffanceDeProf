@@ -1,5 +1,12 @@
 "use strict";
 
+var Mustache = window.Mustache;
+
+var templates = {
+  students: "{{#students}}<tr data-id=\"{{_id}}\"> <td>{{_id}}</td> <td>{{name.last}}, {{name.first}}</td> <td>{{description}}</td> <td>{{course}}</td> </tr> {{/students}}",
+  courses: "{{#courses}}<tr data-id=\"{{_id}}\"> <td>{{_id}}</td> <td>{{name}},</td> <td>{{description}}</td> <td>{{type}}ème</td> </tr> {{/courses}}"
+};
+
 function getCourses() {
   var request = new XMLHttpRequest();
   request.open("GET", "/api/courses/", true);
@@ -10,11 +17,7 @@ function getCourses() {
         // Success!        
         var ret = JSON.parse(this.responseText);
         var list = document.getElementById("listCourses");
-        var content = "";
-        for (var i = 0; i < ret.length; i++) {
-          content += "<li data-id=\""+ ret[i]._id +"\" class=\"courses\">"+ ret[i].name + "</li>";
-        }
-        list.innerHTML = content;
+        list.innerHTML = Mustache.to_html(templates.courses, { courses: ret });
       } else {
         // Error :(
       }
@@ -37,11 +40,7 @@ function getStudents() {
         // Success!        
         var ret = JSON.parse(this.responseText);
         var list = document.getElementById("listStudents");
-        var content = "";
-        for (var i = 0; i < ret.length; i++) {
-          content += "<li data-id=\""+ ret[i]._id +"\" class=\"students\">" + ret[i].name.first + " " + ret[i].name.last + "</li>";
-        }
-        list.innerHTML = content;
+        list.innerHTML = Mustache.to_html(templates.students, { students: ret });
       } else {
         // Error :(
       }
