@@ -105,6 +105,20 @@ module.exports = function(grunt) {
           src: "**/*.js",
           dest: "<%= project.clientDist %>/js"
         }]
+      },
+      other: {
+        files: [{
+          expand: true,
+          cwd: "<%= project.clientSrc %>/templates",
+          src: "**/*",
+          dest: "<%= project.clientDist %>/templates"
+        },
+        {
+          expand: true,
+          cwd: "<%= project.clientSrc %>/images",
+          src: "**/*",
+          dest: "<%= project.clientDist %>/images"
+        }]
       }
     },
     concurrent: { // Pour lancer plusieurs tasks à la fois
@@ -112,7 +126,8 @@ module.exports = function(grunt) {
         "copy:styles",
         "htmlmin:dist",
         "copy:scripts",
-        "copy:bower"
+        "copy:bower",
+        "copy:other"
       ],
       dist: [
         "cssmin:dist",
@@ -142,7 +157,9 @@ module.exports = function(grunt) {
         tasks: ["htmlmin:dist"]
       },
       other: {
-        files: ["<%= project.clientSrc %>/images/*"]
+        files: ["<%= project.clientSrc %>/images/*",
+                "<%= project.clientSrc %>/templates/*"],
+        tasks: ["copy:other"]
       }
     }
   });
@@ -162,7 +179,7 @@ module.exports = function(grunt) {
     "clean:dist",
     "jshint:all",
     "concurrent:dev",
-    "server",
+    //"server", --> Lancer le server via "node app"
     "watch"
   ]);
 };

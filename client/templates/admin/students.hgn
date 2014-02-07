@@ -1,0 +1,13 @@
+{{#students}}
+  <tr data-id="{{_id}}">
+    <td class="cell-id">{{_id}}</td>
+    <td>{{name.last}}, {{name.first}}</td>
+    <td>{{description}}</td>
+    <td class="cell-id">{{course}}</td>
+  </tr>
+{{/students}}
+{{^students}}
+  <tr>
+    <td colspan="4" class="text-danger">Aucun students trouvé... :(</td>
+  </tr>
+{{/students}}
