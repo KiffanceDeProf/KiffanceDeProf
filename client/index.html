@@ -96,39 +96,7 @@
         </form>
       </div>
     </div>
-
-    <!-- Templates -->
-    <script type="text/html" id="templateStudents">
-    {{#students}}
-      <tr data-id="{{_id}}">
-        <td class="cell-id">{{_id}}</td>
-        <td>{{name.last}}, {{name.first}}</td>
-        <td>{{description}}</td>
-        <td class="cell-id">{{course}}</td>
-      </tr>
-    {{/students}}
-    {{^students}}
-      <tr>
-        <td colspan="4" class="text-danger">Aucun students trouvé... :(</td>
-      </tr>
-    {{/students}}
-    </script>
-    <script type="text/html" id="templateCourses">
-    {{#courses}}
-      <tr data-id="{{_id}}">
-        <td class="cell-id">{{_id}}</td>
-        <td>{{name}}</td>
-        <td>{{description}}</td>
-        <td>{{type}}ème</td>
-      </tr>
-    {{/courses}}
-    {{^courses}}
-      <tr>
-        <td colspan="4" class="text-danger">Aucune classe trouvé... :(</td>
-      </tr>
-    {{/courses}}
-    </script>
-    <script src="libs/mustache/mustache.js"></script>
+    
     <script src="js/script.js"></script>
   </body>
 </html>
