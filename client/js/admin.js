@@ -9,6 +9,9 @@ var authHeader = "Basic cm9vdDphbHBpbmU=";
 var Admin = function() {};
 
 Admin.prototype = {
+  /** 
+   * Init the admin interface
+   */
   setup: function() {
     this.loadTemplates({
       students: "admin/students",
@@ -23,6 +26,9 @@ Admin.prototype = {
     this.loadRoutes();
   },
 
+  /**
+   * Util function for AJAX requests
+   */
   ajax: function ajax(method, url, callback) {
     var request = new XMLHttpRequest();
     request.open(method, url, true);
@@ -43,6 +49,9 @@ Admin.prototype = {
     return request;
   },
 
+  /**
+   * Defines routes for crossroads.js
+   */
   loadRoutes: function loadRoutes() {
     var self = this;
     crossroads.addRoute("/courses/{course_id}", function(courseId) {
@@ -72,6 +81,9 @@ Admin.prototype = {
     });
   },
 
+  /**
+   * Init Hasher
+   */
   initHasher: function initHasher() {
     hasher.initialized.add(this.parseHash);
     hasher.changed.add(this.parseHash);
@@ -83,6 +95,9 @@ Admin.prototype = {
     }
   },
 
+  /**
+   * Handle Hash changes
+   */
   parseHash: function parseHash(newHash, oldHash) {
     hasher.changed.active = false;
     hasher.replaceHash(newHash);
@@ -101,6 +116,9 @@ Admin.prototype = {
     }
   },
 
+  /**
+   * Select a Student
+   */
   selectStudent: function selectStudent(id) {
     var student = null;
     for(var i in this.students) {
@@ -119,6 +137,9 @@ Admin.prototype = {
     return this.activeStudent;
   },
 
+  /**
+   * Select a course
+   */
   selectCourse: function selectCourse(id) {
     var course = null;
     for(var i in this.courses) {
@@ -136,6 +157,9 @@ Admin.prototype = {
     return this.activeCourse;
   },
 
+  /**
+   * Update the view
+   */
   updateView: function updateView() {
     var self = this;
     this.showCourseEditor(this.activeCourse);
@@ -161,6 +185,9 @@ Admin.prototype = {
     }
   },
 
+  /**
+   * Shows Courses table
+   */
   showCourses: function showCourses(filter, templateArgs) {
     filter = filter || {};
     templateArgs = templateArgs || {};
@@ -177,6 +204,9 @@ Admin.prototype = {
     this.nodes.coursesList.innerHTML = Mustache.to_html(this.templates.courses, templateArgs);
   },
 
+  /**
+   * Shows Students table
+   */
   showStudents: function showStudents(filter, templateArgs) {
     filter = filter || {};
     templateArgs = templateArgs || {};
@@ -193,6 +223,9 @@ Admin.prototype = {
     this.nodes.studentsList.innerHTML = Mustache.to_html(this.templates.students, templateArgs);
   },
 
+  /**
+   * Shows Students editor
+   */
   showStudentEditor: function showStudentEditor(student) {
     this.nodes.studentEditor.innerHTML = Mustache.to_html(this.templates.studentForm, {
       student: student,
@@ -208,6 +241,9 @@ Admin.prototype = {
     });
   },
 
+  /**
+   * Shows Course editor
+   */
   showCourseEditor: function showStudentEditor(course) {
     this.nodes.courseEditor.innerHTML = Mustache.to_html(this.templates.courseForm, {
       course: course,
@@ -218,6 +254,10 @@ Admin.prototype = {
     });
   },
 
+
+  /** 
+   * Loads courses from API
+   */
   loadCourses: function loadCourses() {
     var self = this;
     this.ajax("GET", "/api/courses/", function(err, res) {
@@ -230,6 +270,9 @@ Admin.prototype = {
     }).send();
   },
 
+  /**
+   * Loads students from API
+   */
   loadStudents: function loadStudents() {
     var self = this;
     this.ajax("GET", "/api/students/", function(err, res) {
@@ -242,6 +285,9 @@ Admin.prototype = {
     }).send();
   },
 
+  /**
+   * Loads all the Mustache templates
+   */
   loadTemplates: function loadTemplates(templates) {
     var loadedTemplates = {};
     var callback = function(templateName, err, templateContent) {
@@ -262,6 +308,9 @@ Admin.prototype = {
     }
   },
 
+  /**
+   * Save some DOM nodes in a var
+   */
   loadDOM: function loadDOM() {
     this.nodes = {
       coursesList: document.getElementById("listCourses"),
