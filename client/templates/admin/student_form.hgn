@@ -9,11 +9,11 @@
     {{/student}}
     <div class="form-group">
       <label for="studentName">Nom de l'élève</label>
-      <input type="text" id="studentName" placeholder="Nom de l'élève" class="form-control" value="{{ student.fullName }}" required />
+      <input type="text" id="studentName" placeholder="Nom de l'élève" class="form-control" value="{{ student.fullName }}" />
     </div>
     <div class="form-group">
       <label for="studentDescription">Description de l'élève</label><br />
-      <textarea id="studentDescription" placeholder="Description de l'élève" class="form-control" required>{{ student.description }}</textarea>
+      <textarea id="studentDescription" placeholder="Description de l'élève" class="form-control">{{ student.description }}</textarea>
     </div>
     <div class="form-group">
       <label for="studentClass">Classe de l'élève</label>

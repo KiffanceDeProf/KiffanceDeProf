@@ -9,15 +9,15 @@
     {{/course}}
     <div class="form-group">
       <label for="courseName">Nom de la classe</label>
-      <input type="text" id="courseName" placeholder="Nom de la classe" class="form-control" value="{{ course.name }}" required />
+      <input type="text" id="courseName" placeholder="Nom de la classe" class="form-control" value="{{ course.name }}" />
     </div>
     <div class="form-group">
       <label for="courseDescription">Description de la classe</label><br />
-      <textarea id="courseDescription" placeholder="Description de la classe" class="form-control" required>{{ course.description }}</textarea>
+      <textarea id="courseDescription" placeholder="Description de la classe" class="form-control" >{{ course.description }}</textarea>
     </div>
     <div class="form-group">
       <label for="courseType">Type de classe</label>
-      <select id="courseType" class="form-control" required>
+      <select id="courseType" class="form-control">
         {{#coursesTypes}}
         <option value="{{.}}" {{courseSelected}}>{{.}}ème</option>
         {{/coursesTypes}}
