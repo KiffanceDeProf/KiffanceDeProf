@@ -259,8 +259,17 @@ module.exports = {
           return;
         }
 
-        res.json({
-          status: "ok"
+        Student.update({ course: req.params.courseId }, { $set: { course: null } }, { multi: true }, function(err) {
+          if(err) {
+            res.json(500, {
+              message: "internal error"
+            });
+          }
+          else {
+            res.json({
+              status: "ok"
+            });
+          }
         });
       });
     }

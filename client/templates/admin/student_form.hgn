@@ -9,15 +9,15 @@
     {{/student}}
     <div class="form-group">
       <label for="studentName">Nom de l'élève</label>
-      <input type="text" id="studentName" placeholder="Nom de l'élève" class="form-control" value="{{ student.fullName }}" />
+      <input type="text" id="studentName" placeholder="Nom de l'élève" class="form-control" value="{{ fullName }}" />
     </div>
     <div class="form-group">
       <label for="studentDescription">Description de l'élève</label><br />
       <textarea id="studentDescription" placeholder="Description de l'élève" class="form-control">{{ student.description }}</textarea>
     </div>
     <div class="form-group">
-      <label for="studentClass">Classe de l'élève</label>
-      <select id="studentClass" class="form-control">
+      <label for="studentCourse">Classe de l'élève</label>
+      <select id="studentCourse" class="form-control">
         {{>coursesSelect}}
       </select>
     </div>
