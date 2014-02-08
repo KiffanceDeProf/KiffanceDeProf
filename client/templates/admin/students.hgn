@@ -1,13 +1,25 @@
-{{#students}}
-  <tr data-id="{{_id}}">
-    <td class="cell-id">{{_id}}</td>
-    <td>{{name.last}}, {{name.first}}</td>
-    <td>{{description}}</td>
-    <td class="cell-id">{{course}}</td>
-  </tr>
-{{/students}}
-{{^students}}
-  <tr>
-    <td colspan="4" class="text-danger">Aucun students trouvé... :(</td>
-  </tr>
-{{/students}}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th width="20%">ID</th>
+      <th width="20%">Name</th>
+      <th width="40%">Description</th>
+      <th width="20%">Course ID</th>
+    </tr>
+  </thead>
+  <tbody id="listStudents">
+  {{#students}}
+    <tr data-id="{{_id}}">
+      <td class="cell-id"><a href="#/students/{{_id}}">{{_id}}</a></td>
+      <td>{{name.last}}, {{name.first}}</td>
+      <td>{{description}}</td>
+      <td class="cell-id"><a href="#/courses/{{course}}">{{course}}</a></td>
+    </tr>
+  {{/students}}
+  {{^students}}
+    <tr>
+      <td colspan="4" class="text-danger">Aucun élève trouvé... :(</td>
+    </tr>
+  {{/students}}
+  </tbody>
+</table>

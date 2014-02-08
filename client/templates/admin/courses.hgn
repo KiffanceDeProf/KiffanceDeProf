@@ -1,13 +1,35 @@
-{{#courses}}
-  <tr data-id="{{_id}}">
-    <td class="cell-id"><a href="#/courses/{{_id}}">{{_id}}</a></td>
-    <td>{{name}}</td>
-    <td>{{description}}</td>
-    <td>{{type}}ème</td>
-  </tr>
-{{/courses}}
-{{^courses}}
-  <tr>
-    <td colspan="4" class="text-danger">Aucune classe trouvé... :(</td>
-  </tr>
-{{/courses}}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th width="20%">ID</th>
+      <th width="20%">Name</th>
+      <th width="40%">Description</th>
+      <th width="20%">Type</th>
+    </tr>
+    <tr data-id="{{_id}}" class="all-courses">
+      <td class="cell-id"><a href="#/">*</a></td>
+      <td colspan="3">Toutes les classes</td>
+    </tr>
+  </thead>
+  <tbody>
+  {{#courses}}
+    <tr data-id="{{_id}}" class="{{courseClass}}">
+      <td class="cell-id"><a href="#/courses/{{_id}}">{{_id}}</a></td>
+      <td>{{name}}</td>
+      <td>{{description}}</td>
+      <td>{{type}}ème</td>
+    </tr>
+  {{/courses}}
+  {{^courses}}
+    <tr>
+      <td colspan="4" class="text-danger">Aucune classe trouvé... :(</td>
+    </tr>
+  {{/courses}}
+  </tbody>
+  <tfoot>
+    <tr data-id="{{_id}}" class="no-course{{#noCourse}} active{{/noCourse}}">
+      <td class="cell-id"><a href="#/courses/none">null</a></td>
+      <td colspan="3">Aucune classe</td>
+    </tr>
+  </tfoot>
+</table>

@@ -1,6 +1,8 @@
 "use strict";
 
-var Mustache = window.Mustache;
+var Mustache = window.Mustache,
+    crossroads = window.crossroads,
+    hasher = window.hasher;
 
 var authHeader = "Basic cm9vdDphbHBpbmU=";
 
@@ -15,6 +17,7 @@ Admin.prototype = {
     this.loadCourses();
     this.loadStudents();
     this.loadDOM();
+    this.loadRoutes();
   },
 
   ajax: function ajax(method, url, callback) {
@@ -37,15 +40,89 @@ Admin.prototype = {
     return request;
   },
 
-  _update: function _update() {
-    if(this.templates && this.courses && this.students) {
-      this.showView();
+  loadRoutes: function loadRoutes() {
+    var self = this;
+    crossroads.addRoute("/courses/{course_id}", function(courseId) {
+      if(courseId === "none") {
+        self.showStudents({ course: null });
+        self.showCourses(null, {
+          noCourse: true
+        });
+      }
+      else {
+        self.showStudents({ course: courseId });
+        self.showCourses(null, {
+          courseClass: function() {
+            return (this._id === courseId) ? "active" : "";
+          }
+        });
+      }
+    });
+
+    crossroads.addRoute("/", function() {
+      self.showStudents();
+      self.showCourses();
+    });
+  },
+
+  initHasher: function initHasher() {
+    hasher.initialized.add(this.parseHash);
+    hasher.changed.add(this.parseHash);
+
+    hasher.init();
+
+    if(!hasher.getHash()){
+      hasher.setHash("");
     }
   },
 
-  showView: function showView() {
-    this.nodes.coursesList.innerHTML = Mustache.to_html(this.templates.courses, { courses: this.courses });
-    this.nodes.studentsList.innerHTML = Mustache.to_html(this.templates.students, { students: this.students });
+  parseHash: function parseHash(newHash, oldHash) {
+    hasher.changed.active = false;
+    hasher.replaceHash(newHash);
+    hasher.changed.active = true;
+    console.log("Hash [\"", oldHash, "\"] -> [\"", newHash, "\"]");
+
+    crossroads.parse(newHash);
+  },
+
+  _update: function _update() {
+    if(this.templates && this.courses && this.students) {
+      this.showCourses();
+      this.showStudents();
+      this.initHasher();
+    }
+  },
+
+  showCourses: function showCourses(filter, templateArgs) {
+    filter = filter || {};
+    templateArgs = templateArgs || {};
+    templateArgs.courses = this.courses.filter(function(item) {
+      for(var i in filter) {
+        if(item.hasOwnProperty(i) && filter[i] === item[i]) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+
+    this.nodes.coursesList.innerHTML = Mustache.to_html(this.templates.courses, templateArgs);
+  },
+
+  showStudents: function showStudents(filter, templateArgs) {
+    filter = filter || {};
+    templateArgs = templateArgs || {};
+    templateArgs.students = this.students.filter(function(item) {
+      for(var i in filter) {
+        if(item.hasOwnProperty(i) && filter[i] !== item[i]) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+
+    this.nodes.studentsList.innerHTML = Mustache.to_html(this.templates.students, templateArgs);
   },
 
   loadCourses: function loadCourses() {

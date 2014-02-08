@@ -8,38 +8,12 @@
   <body>
     <div id="main" class="container">
       <h1>La salle des profs</h1>
-      <div  id="listes">
+      <div id="listes">
           <h3>Classes</h3>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th width="20%">ID</th>
-                <th width="20%">Name</th>
-                <th width="40%">Description</th>
-                <th width="20%">Type</th>
-              </tr>
-            </thead>
-            <tbody id="listCourses">
-
-            </tbody>
-          </table>
-          <a href="#">Ajouter une classe</a>
+          <div id="listCourses">Loading...</div>
           <hr />
           <h3>Élèves</h3>
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th width="20%">ID</th>
-                <th width="20%">Name</th>
-                <th width="40%">Description</th>
-                <th width="20%">Course ID</th>
-              </tr>
-            </thead>
-            <tbody id="listStudents">
-
-            </tbody>
-          </table>
-          <a href="#">Ajouter un élève</a>
+          <div id="listStudents">Loading...</div>
       </div>
       <div id="editeur">
         <form action="#" method="POST" id="formClass" class="hidden">
@@ -97,6 +71,9 @@
       </div>
     </div>
     <script src="libs/mustache/mustache.js"></script>
+    <script src="libs/signals/dist/signals.js"></script>
+    <script src="libs/crossroads/dist/crossroads.js"></script>
+    <script src="libs/hasher/dist/js/hasher.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>

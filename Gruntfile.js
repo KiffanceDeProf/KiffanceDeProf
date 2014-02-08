@@ -145,11 +145,11 @@ module.exports = function(grunt) {
         livereload: true
       },
       scripts: {
-        files: "<%= project.clientSrc %>/js/{*,*/}.js",
+        files: "<%= project.clientSrc %>/js/{,*/}*.js",
         tasks: ["jshint:client", "copy:scripts"]
       },
       styles: {
-        files: "<%= project.clientSrc %>/css/{*,*/}.css",
+        files: "<%= project.clientSrc %>/css/{,*/}*.css",
         tasks: ["copy:styles"]
       },
       html: {
@@ -157,8 +157,8 @@ module.exports = function(grunt) {
         tasks: ["htmlmin:dist"]
       },
       other: {
-        files: ["<%= project.clientSrc %>/images/*",
-                "<%= project.clientSrc %>/templates/*"],
+        files: ["<%= project.clientSrc %>/images/{,*/}*",
+                "<%= project.clientSrc %>/templates/{,*/}*.hgn"],
         tasks: ["copy:other"]
       }
     }
