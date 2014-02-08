@@ -1,0 +1,4 @@
+<option value="">Aucune (null)</option>
+{{#courses}}
+<option value="{{_id}}" {{courseSelected}}>{{name}} ({{_id}})</option>
+{{/courses}}

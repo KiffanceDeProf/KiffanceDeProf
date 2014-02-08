@@ -15,59 +15,9 @@
           <h3>Élèves</h3>
           <div id="listStudents">Loading...</div>
       </div>
-      <div id="editeur">
-        <form action="#" method="POST" id="formClass" class="hidden">
-          <fieldset>
-            <legend>Fiche de classe</legend>
-            <p>
-              <label for="className">Nom du cours</label>
-              <input type="text" name="className" id="className" placeholder="Nom du cours" required/>
-            </p>
-            <p>
-              <label for="classType">Type de cours</label>
-              <select name="classType" id="classType" required>
-                <option value="6">6ème</option>
-                <option value="5">5ème</option>
-                <option value="4">4ème</option>
-                <option value="3">3ème</option>
-              </select>
-            </p>
-            <p>
-              <label for="classDescription">Description du cours</label><br />
-              <textarea name="classDescription" id="classDescription" placeholder="Description du cours" required></textarea>
-            </p>
-            <p>
-              <input type="hidden" name="classId" id="classId" />
-              <input type="submit" value="envoyer" />
-            </p>
-          </fieldset>
-        </form>
-        <form action="#" method="POST" id="formStudent" class="hidden">
-          <fieldset>
-            <legend>Fiche d'élève</legend>
-            <p>
-              <label for="studentName">Nom de l'élève</label>
-              <input type="text" name="studentName" id="studentName" placeholder="Nom de l'élève" required/>
-            </p>
-            <p>
-              <label for="studentDescription">Description de l'élève</label><br />
-              <textarea name="studentDescription" id="studentDescription" placeholder="Description de l'élève" required></textarea>
-            </p>
-            <p>
-              <label for="studentStrength">Force de l'élève</label>
-              <input type="range" name="studentStrength" id="studentStrength" min="0" max="10" step="1" value="10"/>
-            </p>
-            <p>
-              <label for="studentClass">Classe de l'élève</label>
-              <select name="studentClass" id="studentClass">
-              </select>
-            </p>
-            <p>
-              <input type="hidden" name="studentId" id="studentId" />
-              <input type="submit" value="envoyer" />
-            </p>
-          </fieldset>
-        </form>
+      <div class="row editors">
+        <div id="courseEditor" class="col-lg-6"></div>
+        <div id="studentEditor" class="col-lg-6"></div>
       </div>
     </div>
     <script src="libs/mustache/mustache.js"></script>

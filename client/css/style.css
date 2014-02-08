@@ -2,6 +2,6 @@
   display: none;
 }
 
-.cell-id {
-  font-family: monospace;
+.text-mono {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
 }

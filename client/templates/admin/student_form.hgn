@@ -1,0 +1,34 @@
+<form id="studentForm">
+  <fieldset>
+    <legend>Fiche d'élève</legend>
+    {{#student}}
+    <div class="form-group">
+      <label>ID</label>
+      <p class="form-control-static text-mono">{{ student._id }}</p>
+    </div>
+    {{/student}}
+    <div class="form-group">
+      <label for="studentName">Nom de l'élève</label>
+      <input type="text" id="studentName" placeholder="Nom de l'élève" class="form-control" value="{{ student.fullName }}" required />
+    </div>
+    <div class="form-group">
+      <label for="studentDescription">Description de l'élève</label><br />
+      <textarea id="studentDescription" placeholder="Description de l'élève" class="form-control" required>{{ student.description }}</textarea>
+    </div>
+    <div class="form-group">
+      <label for="studentClass">Classe de l'élève</label>
+      <select id="studentClass" class="form-control">
+        {{>coursesSelect}}
+      </select>
+    </div>
+    <div class="form-group">
+      {{#student}}
+        <button id="studentUpdate" class="btn btn-primary">Mettre à jour</button>
+        <button id="studentDelete" class="btn btn-danger">Supprimer</button>
+      {{/student}}
+      {{^student}}
+        <button id="studentCreate" class="btn btn-success">Créer</button>
+      {{/student}}
+    </div>
+  </fieldset>
+</form>

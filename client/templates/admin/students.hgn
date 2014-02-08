@@ -9,11 +9,11 @@
   </thead>
   <tbody id="listStudents">
   {{#students}}
-    <tr data-id="{{_id}}">
-      <td class="cell-id"><a href="#/students/{{_id}}">{{_id}}</a></td>
+    <tr data-id="{{_id}}" class="{{studentClass}}">
+      <td class="text-mono"><a href="#/students/{{_id}}">{{_id}}</a></td>
       <td>{{name.last}}, {{name.first}}</td>
       <td>{{description}}</td>
-      <td class="cell-id"><a href="#/courses/{{course}}">{{course}}</a></td>
+      <td class="text-mono"><a href="#/courses/{{course}}">{{course}}</a></td>
     </tr>
   {{/students}}
   {{^students}}

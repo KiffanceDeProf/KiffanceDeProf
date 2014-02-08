@@ -12,7 +12,10 @@ Admin.prototype = {
   setup: function() {
     this.loadTemplates({
       students: "admin/students",
-      courses: "admin/courses"
+      courses: "admin/courses",
+      studentForm: "admin/student_form",
+      courseForm: "admin/course_form",
+      coursesSelect: "admin/courses_select"
     });
     this.loadCourses();
     this.loadStudents();
@@ -44,24 +47,28 @@ Admin.prototype = {
     var self = this;
     crossroads.addRoute("/courses/{course_id}", function(courseId) {
       if(courseId === "none") {
-        self.showStudents({ course: null });
-        self.showCourses(null, {
-          noCourse: true
-        });
+        self.selectStudent();
+        self.selectCourse("none");
+        self.updateView();
       }
       else {
-        self.showStudents({ course: courseId });
-        self.showCourses(null, {
-          courseClass: function() {
-            return (this._id === courseId) ? "active" : "";
-          }
-        });
+        self.selectStudent();
+        self.selectCourse(courseId);
+        self.updateView();
       }
     });
 
+    crossroads.addRoute("/students/{students_id}", function(studentId) {
+      if(!self.selectStudent(studentId)) {
+        hasher.setHash("");
+      }
+      self.updateView();
+    });
+
     crossroads.addRoute("/", function() {
-      self.showStudents();
-      self.showCourses();
+      self.selectStudent(null);
+      self.selectCourse(null);
+      self.updateView();
     });
   },
 
@@ -89,7 +96,68 @@ Admin.prototype = {
     if(this.templates && this.courses && this.students) {
       this.showCourses();
       this.showStudents();
+      this.showStudentEditor();
       this.initHasher();
+    }
+  },
+
+  selectStudent: function selectStudent(id) {
+    var student = null;
+    for(var i in this.students) {
+      if(this.students[i]._id === id) {
+        student = this.students[i];
+        break;
+      }
+    }
+
+    this.activeStudent = student;
+
+    if(this.activeStudent) {
+      this.selectCourse(this.activeStudent.course);
+    }
+
+    return this.activeStudent;
+  },
+
+  selectCourse: function selectCourse(id) {
+    var course = null;
+    for(var i in this.courses) {
+      if(this.courses[i]._id === id) {
+        course = this.courses[i];
+        break;
+      }
+    }
+
+    if(id === "none") {
+      course = "none";
+    }
+
+    this.activeCourse = course;
+    return this.activeCourse;
+  },
+
+  updateView: function updateView() {
+    var self = this;
+    this.showCourseEditor(this.activeCourse);
+    this.showStudentEditor(this.activeStudent);
+    if(this.activeCourse) {
+      this.showStudents({
+        course: (this.activeCourse === "none") ? null : this.activeCourse._id
+      }, {
+        studentClass: function() {
+          return (self.activeStudent && this._id === self.activeStudent._id) ? "active" : "";
+        }
+      });
+      this.showCourses(null, {
+        noCourse: this.activeCourse === "none",
+        courseClass: function() {
+          return (self.activeCourse !== "none" && this._id === self.activeCourse._id) ? "active" : "";
+        }
+      });
+    }
+    else {
+      this.showStudents();
+      this.showCourses();
     }
   },
 
@@ -123,6 +191,31 @@ Admin.prototype = {
     });
 
     this.nodes.studentsList.innerHTML = Mustache.to_html(this.templates.students, templateArgs);
+  },
+
+  showStudentEditor: function showStudentEditor(student) {
+    this.nodes.studentEditor.innerHTML = Mustache.to_html(this.templates.studentForm, {
+      student: student,
+      courses: this.courses,
+      courseSelected: function() {
+        return (student && this._id === student.course) ? "selected" : null;
+      },
+      fullName: function() {
+        return this.name.first + " " + this.name.last;
+      }
+    }, {
+      coursesSelect: this.templates.coursesSelect
+    });
+  },
+
+  showCourseEditor: function showStudentEditor(course) {
+    this.nodes.courseEditor.innerHTML = Mustache.to_html(this.templates.courseForm, {
+      course: course,
+      coursesTypes: [6, 5, 4, 3],
+      courseSelected: function() {
+        return (course && this === course.type) ? "selected" : "";
+      }
+    });
   },
 
   loadCourses: function loadCourses() {
@@ -172,7 +265,9 @@ Admin.prototype = {
   loadDOM: function loadDOM() {
     this.nodes = {
       coursesList: document.getElementById("listCourses"),
-      studentsList: document.getElementById("listStudents")
+      studentsList: document.getElementById("listStudents"),
+      studentEditor: document.getElementById("studentEditor"),
+      courseEditor: document.getElementById("courseEditor")
     };
   }
 };
