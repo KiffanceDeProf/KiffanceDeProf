@@ -2,93 +2,106 @@
 
 var Mustache = window.Mustache;
 
-// var templates = {
-//   students: document.getElementById("templateStudents").innerHTML,
-//   courses: document.getElementById("templateCourses").innerHTML
-// };
-
 var authHeader = "Basic cm9vdDphbHBpbmU=";
 
-function getCourses(coursesTemplate) {
-  var request = new XMLHttpRequest();
-  request.open("GET", "/api/courses/", true);
+var Admin = function() {};
 
-  request.onload = function() {
-    if (this.status === 200){
-      // Success!        
-      var ret = JSON.parse(this.responseText);
-      var list = document.getElementById("listCourses");
-      list.innerHTML = Mustache.to_html(coursesTemplate, { courses: ret });
-    } else {
-      // Error :(
+Admin.prototype = {
+  setup: function() {
+    this.loadTemplates({
+      students: "admin/students",
+      courses: "admin/courses"
+    });
+    this.loadCourses();
+    this.loadStudents();
+    this.loadDOM();
+  },
+
+  ajax: function ajax(method, url, callback) {
+    var request = new XMLHttpRequest();
+    request.open(method, url, true);
+    request.addEventListener("load", function() {
+      if(this.status === 200) {
+        callback.call(this, null, this.responseText);
+      }
+      else {
+        callback.call(this, new Error("XHR Failed"), this.responseText);
+      }
+    });
+
+    request.addEventListener("error", function() {
+      callback.call(this, new Error("XHR Error"), null);
+    });
+
+    request.setRequestHeader("Authorization", authHeader);
+    return request;
+  },
+
+  _update: function _update() {
+    if(this.templates && this.courses && this.students) {
+      this.showView();
     }
-  };
+  },
 
-  request.setRequestHeader("Authorization", authHeader);
-  request.send();
-  request = null;
-}
+  showView: function showView() {
+    this.nodes.coursesList.innerHTML = Mustache.to_html(this.templates.courses, { courses: this.courses });
+    this.nodes.studentsList.innerHTML = Mustache.to_html(this.templates.students, { students: this.students });
+  },
 
-function getStudents(studentsTemplate) {
-  var request = new XMLHttpRequest();
-  request.open("GET", "/api/students/", true);
+  loadCourses: function loadCourses() {
+    var self = this;
+    this.ajax("GET", "/api/courses/", function(err, res) {
+      if(err) {
+        throw err;
+      }
 
-  request.onload = function() {
-    if (this.status === 200){
-      // Success!
-      var ret = JSON.parse(this.responseText);
-      var list = document.getElementById("listStudents");
-      list.innerHTML = Mustache.to_html(studentsTemplate, { students: ret });
-    } else {
-      // Error :(
-    }
-  };
+      self.courses = JSON.parse(res);
+      self._update();
+    }).send();
+  },
 
-  request.setRequestHeader("Authorization", authHeader);
-  request.send();
-  request = null;
-}
+  loadStudents: function loadStudents() {
+    var self = this;
+    this.ajax("GET", "/api/students/", function(err, res) {
+      if(err) {
+        throw err;
+      }
 
-function loadTemplate(templatePath, callback) {
-  var request = new XMLHttpRequest();
-  request.open("GET", "/templates/" + templatePath + ".hgn", true);
-  request.onload = function() {
-    if(this.status === 200) {
-      callback(null, this.responseText);
-    }
-    else {
-      callback(new Error("XHR Error"), null);
-    }
-  };
+      self.students = JSON.parse(res);
+      self._update();
+    }).send();
+  },
 
-  request.onerror = function() {
-    callback(new Error("XHR Error"), null);
-  };
+  loadTemplates: function loadTemplates(templates) {
+    var loadedTemplates = {};
+    var callback = function(templateName, err, templateContent) {
+      if(err) {
+        throw err;
+      }
 
-  request.send();
-}
-
-function loadTemplates(templates, cb) {
-  var loadedTemplates = {},
-      loadCb = function(templateName, err, templateContent) {
       loadedTemplates[templateName] = templateContent;
+
       if(Object.keys(loadedTemplates).length === Object.keys(templates).length) {
-        cb(loadedTemplates);
+        this.templates = loadedTemplates;
+        this._update();
       }
     };
-  for(var i in templates) {
-    loadTemplate(templates[i], loadCb.bind(null, i));
+
+    for(var i in templates) {
+      this.ajax("GET", "/templates/" + templates[i] + ".hgn", callback.bind(this, i)).send();
+    }
+  },
+
+  loadDOM: function loadDOM() {
+    this.nodes = {
+      coursesList: document.getElementById("listCourses"),
+      studentsList: document.getElementById("listStudents")
+    };
   }
-}
+};
 
-(function() {
-  loadTemplates({
-    students: "admin/students",
-    courses: "admin/courses"
-  }, function(templates) {
-    console.log(templates);
-    getCourses(templates.courses);
-    getStudents(templates.students);
-  });
-})();
+var admin = new Admin();
 
+document.addEventListener("DOMContentLoaded", function() {
+  admin.setup();
+});
