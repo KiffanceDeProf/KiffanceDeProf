@@ -90,12 +90,12 @@ module.exports = function(grunt) {
           dest: "<%= project.clientDist %>/libs"
         }]
       },
-      dist: { // A définir, pour les ressources n'ayant besoin d'aucunes compilation
+      templates: {
         files: [{
           expand: true,
-          cwd: "<%= project.clientSrc %>",
-          src: "**/*.js",
-          dest: "<%= project.clientDist %>"
+          cwd: "<%= project.clientSrc %>/templates",
+          src: "**/*.hgn",
+          dest: "<%= project.clientDist %>/templates"
         }]
       },
       scripts: { // Copie les scripts sans minimification
@@ -109,12 +109,6 @@ module.exports = function(grunt) {
       other: {
         files: [{
           expand: true,
-          cwd: "<%= project.clientSrc %>/templates",
-          src: "**/*",
-          dest: "<%= project.clientDist %>/templates"
-        },
-        {
-          expand: true,
           cwd: "<%= project.clientSrc %>/images",
           src: "**/*",
           dest: "<%= project.clientDist %>/images"
@@ -127,13 +121,16 @@ module.exports = function(grunt) {
         "htmlmin:dist",
         "copy:scripts",
         "copy:bower",
+        "copy:templates",
         "copy:other"
       ],
       dist: [
         "cssmin:dist",
         "htmlmin:dist",
         "uglify:dist",
-        "copy:bower"
+        "copy:bower",
+        "copy:templates",
+        "copy:other"
       ],
       server: [ // Start server & watch files change
         "watch",
@@ -156,9 +153,12 @@ module.exports = function(grunt) {
         files: "<%= project.clientSrc %>/*.html",
         tasks: ["htmlmin:dist"]
       },
+      templates: {
+        files: ["<%= project.clientSrc %>/templates/{,*/}*.hgn"],
+        tasks: ["copy:templates"]
+      },
       other: {
-        files: ["<%= project.clientSrc %>/images/{,*/}*",
-                "<%= project.clientSrc %>/templates/{,*/}*.hgn"],
+        files: ["<%= project.clientSrc %>/images/{,*/}*"],
         tasks: ["copy:other"]
       }
     }
