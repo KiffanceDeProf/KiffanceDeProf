@@ -38,7 +38,23 @@ exports.setup = function setup(app) {
     [apiPath + "/attributes", "attributes#create", "auth#init", "auth#isAdmin", "post"],
     [apiPath + "/attributes/:attributeId", "attributes#find", "auth#init", "get"],
     [apiPath + "/attributes/:attributeId", "attributes#update", "auth#init", "auth#isAdmin", "put"],
-    [apiPath + "/attributes/:attributeId", "attributes#delete", "auth#init", "auth#isAdmin", "delete"]
+    [apiPath + "/attributes/:attributeId", "attributes#delete", "auth#init", "auth#isAdmin", "delete"],
+
+    
+    // [apiPath + "/games", "game#list", "auth#init", "get"],
+    // [apiPath + "/games", "game#create", "auth#init", "post"],
+    // [apiPath + "/games/:gameId", "game#find", "auth#init", "get"],
+    // [apiPath + "/games/:gameId", "game#update", "auth#init", "auth#isAdmin", "put"],
+    // [apiPath + "/games/:gameId", "game#delete", "auth#init", "auth#isAdmin", "delete"],
+    // [apiPath + "/games/:gameId/trimester", "game#listTrimesters", "auth#init", "get"],
+    // [apiPath + "/games/:gameId/trimester", "game#createTrimester", "auth#init", "post"],
+    // [apiPath + "/games/:gameId/trimester/:trimesterId", "game#getTrimester", "auth#init", "get"],
+    // [apiPath + "/games/:gameId/trimester/:trimesterId", "game#updateTrimester", "auth#init", "put"],
+    // [apiPath + "/games/:gameId/trimester/:trimesterId/students", "game#getStudents", "auth#init", "get"],
+    // [apiPath + "/games/:gameId/trimester/:trimesterId/students", "game#updateStudents", "auth#init", "put"],
+    // [apiPath + "/games/:gameId/trimester/:trimesterId/students/:id", "game#getStudent", "auth#init", "get"],
+    // [apiPath + "/games/:gameId/trimester/:trimesterId/students/:id", "game#updateStudent", "auth#init", "put"]
+    
   ];
 
   expressPath(app, routes, { verbose: (app.settings.env === "development") });
