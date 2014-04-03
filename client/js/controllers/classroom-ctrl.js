@@ -14,22 +14,9 @@ angular.module("k2pControllers")
       [ {door: true}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
       [ {}, {table: true}, {table: true}, {}, {table: true}, {table: true}, {}, {table: true}, {table: true}, {window: true} ],
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
-      [ {}, {}, {table: true}, {table: true}, {}, {}, {}, {}, {}, {} ],
+      [ {}, {}, {teacherDesk: true}, {teacherDesk: true}, {}, {}, {}, {}, {}, {} ],
       [ {}, {}, {}, {}, {blackboard: true}, {blackboard: true}, {}, {}, {}, {} ]
     ];
-
-
-    // $scope.students = [
-    //   { name: "Student 1", coord: [3, 2] },
-    //   { name: "Student 2", coord: [9, 4] },
-    //   { name: "Student 3", coord: [9, 5] },
-    //   { name: "Student 4", coord: [9, 1] },
-    //   { name: "Student 5", coord: [1, 5] },
-    //   { name: "Student 6" },
-    //   { name: "Student 7" },
-    //   { name: "Student 8" },
-    //   { name: "Student 9" }
-    // ];
 
     for(var i in $scope.students) {
       if($scope.students[i].coord) {

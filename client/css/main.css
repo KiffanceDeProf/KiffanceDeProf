@@ -15,6 +15,8 @@ body {
   height: 40px;
   position: relative;
   padding: 4px!important;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAAoCAYAAAChDJfXAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gQDEjgm2eWQyQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAACISURBVGje7dgxDkBQEAXAJSqFhkLl/qdwAI1CJ6rfOAaFlgaJwrwLbDLZbDYvW9Oyxc2UVR1pHqNpu/gib83PQyBAgAABAgQI5ynKqn7lafkyT+dn09Bvv9+EJy+nt9lhhAABAgQIECBAgAABAgQIECD8ODrG0DEem6BjdBMgQIAAAQIECNfZAaRzHkSLjHQ0AAAAAElFTkSuQmCC);
+  border: none!important;
 }
 
 .classroom-table td:before {
@@ -32,15 +34,21 @@ body {
 }
 
 .classroom-table td:hover:before {
-  opacity: 0.1;
+  opacity: 0.05;
 }
 
 .classroom-table td.table {
   background-color: #ddd;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAAoCAYAAAChDJfXAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gQDEwQWjQ2zrQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAAGcSURBVGje5Zoxa8JQEMfPIy3awSSgUGxxcnUQ/Pyl0KFDhQyumTIExCGJQw1twU4NqGny7sX3TP7elsB7ufvde5d3d68XfLwfJtMZ3arEUUi9zWZ7iKOQiIj6/cHFJs/z/dUMK7PjP33WwYrYpiK2pMzgKn3YpPe6AoJNL+MugGAb+7ntINhWYGszCLYZ4dsKgnUGI4EoINQphg6CVRVDBsESxVBBsFQxRBCsoxgSiAKC9KyNBoJ1kw4kELUJ1C2AUEqg0EEoJ1DIIEQJFCoIcQKFCEIrgUIDoVRjRAehXGhFBiGqNqOCEJfcEUFo9R3QQGg3X5BANOpAoYBo3IZDAOFIB7y9vpDnDs/eu55/9i5Lk8q5ysY0kSxNaL5YmofguUN6fHou98jg4ejZH40p339We/FkTBPxR2OaTGf012W3th2OlnmJwXVG1kGSys/3l/2Y0EYQ0hgh3g7zxZJUbraUecS5u7+4F09ll2wLEKoB2NH5kOqek9wYMXEIUgVh7KZKl36fRiF0BYRxCF0A4cRRSOtgRbcqabajX1mOBduIJRNBAAAAAElFTkSuQmCC);;
+}
+
+.classroom-table td.teacherDesk {
+  background-color: #dcc;
+  background-image: none;
 }
 
 .classroom-table td.selected:before {
-  opacity: 0.2;
+  opacity: 0.1;
 }
 
 .classroom-table td.window:after,
