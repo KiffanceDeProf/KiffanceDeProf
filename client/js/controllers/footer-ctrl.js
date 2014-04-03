@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("kiffanceDeProfApp")
+angular.module("k2pControllers")
   .controller("FooterCtrl", function ($scope) {
     $scope.stats = {
       users: {

@@ -1,10 +1,17 @@
 "use strict";
 
+angular.module("k2pControllers", []);
+angular.module("k2pDirectives", []);
+angular.module("k2pServices", []);
+
 angular
-  .module("kiffanceDeProfApp", [
+  .module("k2pApp", [
     "ngCookies",
     "ngResource",
-    "ngRoute"
+    "ngRoute",
+    "k2pControllers",
+    "k2pServices",
+    "k2pDirectives"
   ])
   .config(function($routeProvider) {
     $routeProvider

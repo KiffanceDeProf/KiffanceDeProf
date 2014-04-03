@@ -6,7 +6,7 @@
 // Allow access to dataTransfer attribute
 jQuery.event.props.push("dataTransfer");
 
-angular.module("kiffanceDeProfApp")
+angular.module("k2pDirectives")
   .directive("kpDrag", ["$rootScope", "$parse", function($rootScope, $parse) {
   
   var dragStart = function(evt, element, dragStyle) {
@@ -36,7 +36,7 @@ angular.module("kiffanceDeProfApp")
 }]);
 
 
-angular.module("kiffanceDeProfApp")
+angular.module("k2pDirectives")
   .directive("kpDrop", ["$rootScope", "$parse", function($rootScope, $parse) {
   
   var dragEnter = function(evt, element, dropStyle) {

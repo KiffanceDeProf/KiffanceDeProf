@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("kiffanceDeProfApp")
+angular.module("k2pControllers")
   .controller("HeaderCtrl", function ($scope) {
     $scope = {};
   });
