@@ -96,6 +96,12 @@ module.exports = function(grunt) {
           cwd: "<%= project.clientSrc %>/templates",
           src: "**/*.hgn",
           dest: "<%= project.clientDist %>/templates"
+        },
+        {
+          expand: true,
+          cwd: "<%= project.clientSrc %>/views",
+          src: "**/*.html",
+          dest: "<%= project.clientDist %>/views"
         }]
       },
       scripts: { // Copie les scripts sans minimification
@@ -154,7 +160,7 @@ module.exports = function(grunt) {
         tasks: ["htmlmin:dist"]
       },
       templates: {
-        files: ["<%= project.clientSrc %>/templates/{,*/}*.hgn"],
+        files: ["<%= project.clientSrc %>/{templates,views}/{,*/}*.{hgn,html}"],
         tasks: ["copy:templates"]
       },
       other: {

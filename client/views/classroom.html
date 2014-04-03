@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-lg-2" kp-drop="null" kp-drop-style="drop">
+    <h4>Élèves:</h4>
+    <ul>
+      <li ng-repeat="student in students" kp-drag="$index" kp-drag-style="drag" ng-hide="student.coord">
+        <div class="student-name">{{student.name}}</div>
+      </li>
+    </ul>
+  </div>
+  <div class="col-lg-7">
+    <table class="table table-bordered text-center classroom-table">
+      <tr ng-repeat="row in classroom.content">
+        <td 
+          ng-repeat="item in row" 
+          ng-click="selectItem($parent.$index, $index)" 
+          ng-class="{
+            table: item.table == true,
+            window: item.window == true,
+            blackboard: item.blackboard == true,
+            door: item.door == true,
+            heater: item.heater == true,
+            selected: $parent.$index == classroom.selectedItem.coord[0] && $index == classroom.selectedItem.coord[1]}"
+          kp-drop="[$parent.$index, $index]" kp-drop-style="drop">
+            <div class="student-name" 
+                 ng-show="item.student !== undefined"
+                 kp-drag="item.student" kp-drag-stype="drag">{{students[item.student].name}}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="col-lg-3">
+    <div class="selected-info" ng-show="classroom.selectedItem">
+      <h3>Selected:</h3>
+      <ul>
+        <li ng-repeat="(name, value) in classroom.selectedItem">
+          <em>{{name}}:</em> {{value}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

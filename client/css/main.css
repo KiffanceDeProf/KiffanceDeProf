@@ -1,0 +1,107 @@
+/** 
+ * Main stylesheet
+ */
+
+body {
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+
+.classroom-table {
+  table-layout: fixed;
+}
+
+.classroom-table td {
+  height: 40px;
+  position: relative;
+  padding: 4px!important;
+}
+
+.classroom-table td:before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: black;
+  opacity: 0;
+  z-index: 1;
+  /*transition: opacity .2s ease;*/
+}
+
+.classroom-table td:hover:before {
+  opacity: 0.1;
+}
+
+.classroom-table td.table {
+  background-color: #ddd;
+}
+
+.classroom-table td.selected:before {
+  opacity: 0.2;
+}
+
+.classroom-table td.window:after,
+.classroom-table td.door:after,
+.classroom-table td.blackboard:after,
+.classroom-table td.heater:after {
+  content: "";
+  display: block;
+  position: absolute;
+}
+
+.classroom-table td.blackboard:after {
+  background-color: #353;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+}
+
+.classroom-table td.door:after {
+  background-color: #977;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  width: 5px;
+}
+
+.classroom-table td.heater:after {
+  background-color: #E85;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  width: 10px;
+}
+
+.classroom-table td.window:after {
+  background-color: #eef;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  width: 4px;
+}
+
+.classroom-table td.drop {
+  background-color: #aaa;
+}
+
+.student-name {
+  background-color: #fff;
+  border: 1px solid #EEE;
+  padding: 4px;
+}
+
+.classroom-table .student-name {
+  font-size: 10px;
+  height: 31px;
+  line-height: 24px;
+  position: relative;
+  z-index: 10;
+}
+
+.student-name.drag {
+  font-style: italic;
+}
