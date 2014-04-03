@@ -68,7 +68,7 @@ angular.module("k2pControllers")
           $scope.students[studentId].coord = undefined;
           return;
         }
-        else if($scope.classroom[dropCoord[0]][dropCoord[1]].student) {
+        else if($scope.classroom[dropCoord[0]][dropCoord[1]].student !== undefined) {
           $scope.students[$scope.classroom[dropCoord[0]][dropCoord[1]].student].coord = undefined;
         }
 
