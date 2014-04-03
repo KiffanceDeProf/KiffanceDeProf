@@ -88,10 +88,18 @@ body {
   background-color: #aaa;
 }
 
+.unplaced-students {
+  min-height: 500px;
+}
+
 .student-name {
   background-color: #fff;
   border: 1px solid #EEE;
   padding: 4px;
+}
+
+.unplaced-students .student-name {
+  margin: 4px 0;
 }
 
 .classroom-table .student-name {

@@ -15,7 +15,7 @@ angular
   ])
   .config(function($routeProvider) {
     $routeProvider
-      .when("/classroom", {
+      .when("/classroom/:courseId", {
         templateUrl: "views/classroom.html",
         controller: "ClassroomCtrl"
       });
