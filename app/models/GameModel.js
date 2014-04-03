@@ -20,16 +20,35 @@ module.exports = function(mongoose) {
       ref: "Course",
       required: true
     },
-    studentsMap: [{
-      seat: {
+    trimester: [{
+      min: 1,
+      max: 3,
+      required: true,
+      overallScore: {
         type: Number,
         required: true
       },
-      student: {
-        type: ObjectId,
-        ref: "Student",
-        required: true
-      }
+      studentsMap: [{
+        seat: {
+          type: Number,
+          required: true
+        },
+        student: {
+          type: ObjectId,
+          ref: "Student",
+          required: true
+        },
+        mood: {
+          default: 10,
+          type: Number,
+          required: true
+        },
+        note: {
+          default: 10,
+          type: Number,
+          required: true
+        }
+      }]
     }]
   });
 
