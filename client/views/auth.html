@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-lg-6">
+    <h2>Login</h2>
+    <div class="text-center">
+      <a href="#/auth" class="btn btn-lg btn-danger disabled">Google</a>
+      <a href="#/auth" class="btn btn-lg btn-info disabled">Twitter</a>
+      <a href="#/auth" class="btn btn-lg btn-primary disabled">Facebook</a>
+    </div>
+    <hr />
+    <form ng-submit="auth.local.login(userLogin)" name="localLoginForm" ng-class="{error:localLoginForm.$error.login}">
+      <div class="alert alert-warning alert-dismissable" ng-repeat="alert in localLoginForm.alerts">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{alert}}
+      </div>
+
+      <div class="form-group" ng-class="{'has-error': localLoginForm.email.$dirty && localLoginForm.email.$invalid }">
+        <label class="control-label" for="localAuthEmail">Email address</label>
+        <input type="email" class="form-control" ng-model="userLogin.email" name="email" id="localAuthEmail" placeholder="Enter email" ng-required="true">
+      </div>
+      <div class="form-group" ng-class="{'has-error': localLoginForm.password.$dirty && localLoginForm.password.$invalid }">
+        <label class="control-label" for="localAuthPassword">Password</label>
+        <input type="password" class="form-control" ng-model="userLogin.password" name="password" id="localAuthPassword" placeholder="Password" ng-required="true">
+      </div>
+      <button type="submit" class="btn btn-default" ng-disabled="!localLoginForm.$valid">Login</button>
+    </form>
+  </div>
+
+  <div class="col-lg-6">
+    <h2>Register</h2>
+    <form ng-submit="auth.local.register(userRegister)" name="localRegisterForm" ng-class="{error:localRegisterForm.$error.register}">
+      <div class="alert alert-warning alert-dismissable" ng-repeat="alert in localRegisterForm.alerts">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{alert}}
+      </div>
+      
+      <div class="form-group" ng-class="{'has-error': localRegisterForm.screenName.$dirty && localRegisterForm.screenName.$invalid }">
+        <label class="control-label" for="localRegisterScreenName">Pseudo</label>
+        <input type="text" class="form-control" ng-model="userRegister.screenName" name="screenName" id="localRegisterScreenName" placeholder="Pseudo" ng-required="true">
+      </div>
+
+      <div class="form-group" ng-class="{'has-error': localRegisterForm.email.$dirty && localRegisterForm.email.$invalid }">
+        <label class="control-label" for="localRegisterEmail">Email address</label>
+        <input type="email" class="form-control" ng-model="userRegister.email" name="email" id="localRegisterEmail" placeholder="Enter email" ng-required="true">
+      </div>
+
+      <div class="form-group" ng-class="{'has-error': localRegisterForm.password.$dirty && localRegisterForm.password.$invalid }">
+        <label class="control-label" for="localRegisterPassword">Password</label>
+        <input type="password" class="form-control" ng-model="userRegister.password" name="password" id="localRegisterPassword" placeholder="Password" ng-required="true">
+      </div>
+
+      <div class="form-group" ng-class="{'has-error': localRegisterForm.passwordConfirm.$dirty && localRegisterForm.passwordConfirm.$invalid }">
+        <input type="password" class="form-control" ng-model="userRegister.passwordConfirm" name="passwordConfirm" id="localRegisterPasswordConfirm" placeholder="Confirmation" ng-required="true" password-match="userRegister.password">
+      </div>
+      <button type="submit" class="btn btn-default" ng-disabled="!localRegisterForm.$valid">Register</button>
+    </form>
+
+    <p><pre><code>{{ localRegisterForm.$error | json }}</code></pre></p>
+  </div>
+</div>

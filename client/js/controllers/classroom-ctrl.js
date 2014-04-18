@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("k2pControllers")
-  .controller("ClassroomCtrl", ["$scope","$route", "Courses", function ($scope, $route, Courses) {
+  .controller("ClassroomCtrl", ["$scope", "$route", "Courses", function ($scope, $route, Courses) {
     $scope.classroom = [
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
       [ {heater: true}, {table: true}, {table: true}, {}, {table: true}, {table: true}, {}, {table: true}, {table: true}, {window: true} ],

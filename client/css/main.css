@@ -14,7 +14,7 @@ body {
 .classroom-table td {
   height: 40px;
   position: relative;
-  padding: 4px!important;
+  padding: 0px!important;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEEAAAAoCAYAAAChDJfXAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3gQDEjgm2eWQyQAAABl0RVh0Q29tbWVudABDcmVhdGVkIHdpdGggR0lNUFeBDhcAAACISURBVGje7dgxDkBQEAXAJSqFhkLl/qdwAI1CJ6rfOAaFlgaJwrwLbDLZbDYvW9Oyxc2UVR1pHqNpu/gib83PQyBAgAABAgQI5ynKqn7lafkyT+dn09Bvv9+EJy+nt9lhhAABAgQIECBAgAABAgQIECD8ODrG0DEem6BjdBMgQIAAAQIECNfZAaRzHkSLjHQ0AAAAAElFTkSuQmCC);
   border: none!important;
 }
@@ -100,22 +100,20 @@ body {
   min-height: 500px;
 }
 
-.student-name {
-  background-color: #fff;
-  border: 1px solid #EEE;
-  padding: 4px;
-}
-
 .unplaced-students .student-name {
   margin: 4px 0;
+  padding: 4px;
+  background-color: #fff;
+  border: 1px solid #EEE;
 }
 
 .classroom-table .student-name {
   font-size: 10px;
-  height: 31px;
-  line-height: 24px;
+  height: 40px;
+  line-height: 40px;
   position: relative;
   z-index: 10;
+  text-shadow: 0 1px 1px white;
 }
 
 .student-name.drag {

@@ -3,7 +3,7 @@
  */
 "use strict";
 
-angular.module("k2pServices", ["ngResource"])
+angular.module("k2pServices")
   .factory("Courses", ["$resource", function($resource) {
     return $resource("/api/courses/:courseId/:sub", {}, {
       getStudents: {

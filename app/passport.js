@@ -29,13 +29,12 @@ module.exports.setup = function(passport, mongoose) {
    * Bearer Strategy for API auth
    */
   passport.use(new BearerStrategy(function(token, done) {
-    console.log(token);
     User.findOne({ bearerToken: token }, function(err, user) {
       if (err) {
         return done(err);
       }
       else if(!user) {
-        return done(null, {});
+        return done(null, false);
       }
       else {
         return done(null, user);
@@ -51,9 +50,10 @@ module.exports.setup = function(passport, mongoose) {
   // Register
   passport.use("local-register", new LocalStrategy({
       usernameField : "email",
-      passwordField : "password"
+      passwordField : "password",
+      passReqToCallback: true // Pour pouvoir set le pseudo
     },
-    function(email, password, done) {
+    function(req, email, password, done) {
       process.nextTick(function() { // Sinon ca marche pas...
         User.findOne({ "auth.local.email" :  email }, function(err, user) { // Verifie si l'utilisateur existe
           if (err) {
@@ -64,6 +64,7 @@ module.exports.setup = function(passport, mongoose) {
           }
           else { // Crée l'utilisateur
             var newUser = new User();
+            newUser.screenName = req.body.screenName || "Anonymous";
             newUser.auth.local.email = email;
             newUser.auth.local.password = newUser.generateHash(password);
             newUser.save(function(err) {

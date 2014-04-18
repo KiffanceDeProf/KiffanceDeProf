@@ -30,7 +30,7 @@ app.configure(function() {
   app.set("api path", "/api");
   app.set("passport", passport);
 
-  app.use(express.logger("tiny"));
+  app.use(express.logger("short"));
   app.use(express.compress());
   app.use(passport.initialize());
   app.use(express.bodyParser());

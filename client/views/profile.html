@@ -1,0 +1,64 @@
+<h1>{{ user.screenName }} <small>Profil</small></h1>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <h3 class="panel-title">Local</h3>
+      </div>
+      <div class="panel-body" ng-hide="user.auth.local">
+        <button class="btn btn-default">Connexion</button>
+      </div>
+      <div class="panel-body" ng-show="user.auth.local">
+        <p><strong>Mail:</strong> {{ user.auth.local.email }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <h3 class="panel-title">Twitter</h3>
+      </div>
+      <div class="panel-body" ng-hide="user.auth.twitter">
+        <button class="btn btn-default">Connexion</button>
+      </div>
+      <div class="panel-body" ng-show="user.auth.twitter">
+        <p><strong>DisplayName:</strong> {{ user.auth.twitter.displayName }}</p>
+        <p><strong>Username:</strong> @{{ user.auth.twitter.username }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <h3 class="panel-title">Facebook</h3>
+      </div>
+      <div class="panel-body" ng-hide="user.auth.facebook">
+        <button class="btn btn-default">Connexion</button>
+      </div>
+      <div class="panel-body" ng-show="user.auth.facebook">
+        <p><strong>Mail:</strong> {{ user.auth.facebook.email }}</p>
+        <p><strong>Name:</strong> {{ user.auth.facebook.Name }}</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-lg-6">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <h3 class="panel-title">Google</h3>
+      </div>
+      <div class="panel-body" ng-hide="user.auth.google">
+        <button class="btn btn-default">Connexion</button>
+      </div>
+      <div class="panel-body" ng-show="user.auth.google">
+        <p><strong>Mail:</strong> {{ user.auth.google.email }}</p>
+        <p><strong>Name:</strong> {{ user.auth.google.name }}</p>
+      </div>
+    </div>
+  </div>
+</div>

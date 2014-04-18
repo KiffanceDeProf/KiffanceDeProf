@@ -11,11 +11,12 @@ exports.setup = function setup(app) {
   var apiPath = app.get("api path");
   var routes = [
     [apiPath + "/", "general#apiInfo", "auth#init", "get"],
-    [apiPath + "/user/me", "users#me", "auth#init", "auth#login", "get"],
+    [apiPath + "/user/me", "users#me", "auth#init", "auth#bearerAuth", "get"],
     [apiPath + "/admin-only", "users#adminOnly", "auth#init", "auth#isAdmin", "get"],
 
     [apiPath + "/auth/local/login", "users#generateBearer", "auth#init", "auth#localLogin", "post"],
     [apiPath + "/auth/local/register", "users#generateBearer", "auth#init", "auth#localRegister", "post"],
+    [apiPath + "/auth/token/validate", "users#validate", "auth#init", "auth#bearerAuth", "get"],
 
     [apiPath + "/students", "students#list", "auth#init", "get"],
     [apiPath + "/students", "students#create", "auth#init", "auth#isAdmin", "post"],
