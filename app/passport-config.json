@@ -1,0 +1,14 @@
+{
+  "google": {
+    "clientId": false,
+    "clientSecret": false
+  },
+  "twitter": {
+    "consumerKey": false,
+    "consumerSecret": false
+  },
+  "facebook": {
+    "clientId": false,
+    "clientSecret": false
+  }
+}
