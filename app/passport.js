@@ -6,10 +6,12 @@
 "use strict";
 
 var LocalStrategy = require("passport-local").Strategy,
-    BearerStrategy = require("passport-http-bearer").Strategy;
-    // FacebookStrategy = require("passport-facebook").Strategy,
+    BearerStrategy = require("passport-http-bearer").Strategy,
+    CookieStrategy = require("./lib/CookieStrategy").Strategy,
+    FacebookStrategy = require("passport-facebook").Strategy,
     // TwitterStrategy = require("passport-twitter").Strategy,
     // GoogleStrategy = require("passport-google").Strategy;
+    PassportConfig = require("./passport-config.json");
 
 module.exports.setup = function(passport, mongoose) {
   var User = mongoose.models.User;
@@ -43,6 +45,88 @@ module.exports.setup = function(passport, mongoose) {
   }));
 
   /**
+   * Cookie Strategy for API auth
+   */
+  passport.use(new CookieStrategy(function(token, done) {
+    User.findOne({ linkCookie: token }, function(err, user) {
+      if (err) {
+        return done(err);
+      }
+      else if(!user) {
+        return done(null, false);
+      }
+      else {
+        user.linkCookie = null; // On le consomme, pour aps le réutiliser
+        user.save(); // osef de l'async #yolo
+        return done(null, user);
+      }
+    });
+  }));
+
+  /**
+   * Facebook Strategy
+   */
+  passport.use("facebook", new FacebookStrategy({
+    clientID: PassportConfig.facebook.clientId,
+    clientSecret: PassportConfig.facebook.clientSecret,
+    callbackURL: "http://localhost:1337/api/auth/facebook/callback",
+    passReqToCallback: true,
+    display: "popup",
+    profileFields: ["id", "displayName", "photos", "profileUrl"]
+  }, function(req, accessToken, refreshToken, profile, done) {
+    process.nextTick(function() {
+        User.findOne({ "auth.facebook.id": profile.id }, function(err, user) {
+          if (err) {
+            return done(err);
+          }
+          else if(req.user) {
+            req.user.auth.facebook = {
+              id: profile.id,
+              token: accessToken,
+              name: profile.displayName,
+              url: profile.profileUrl,
+              profilePicture: profile.photos[0].value || null
+            };
+
+            req.user.save(function(err) {
+              if(err) {
+                throw err;
+              }
+              else {
+                return done(null, req.user);
+              }
+            });
+          }
+          else if (user) {
+            user.auth.facebook.name = profile.displayName;
+            user.save();
+            return done(null, user);
+          }
+          else { // Crée l"utilisateur
+            var newUser = new User();
+            newUser.screenName = profile.username || "Anonymous";
+            newUser.auth.facebook = {
+              id: profile.id,
+              token: accessToken,
+              name: profile.displayName,
+              url: profile.profileUrl,
+              profilePicture: profile.photos[0] || null
+            };
+            newUser.save(function(err) {
+              if (err) { // Quelque chose s"est mal passé... :(
+                throw err;
+              }
+              else {
+                return done(null, newUser);
+              }
+            });
+          }
+
+        });
+      });
+  }));
+
+  /**
    * Local Strategy
    * --> User/Pass
    */
@@ -55,20 +139,20 @@ module.exports.setup = function(passport, mongoose) {
     },
     function(req, email, password, done) {
       process.nextTick(function() { // Sinon ca marche pas...
-        User.findOne({ "auth.local.email" :  email }, function(err, user) { // Verifie si l'utilisateur existe
+        User.findOne({ "auth.local.email" :  email }, function(err, user) { // Verifie si l"utilisateur existe
           if (err) {
             return done(err);
           }
           else if (user) {
             return done(null, false);
           }
-          else { // Crée l'utilisateur
+          else { // Crée l"utilisateur
             var newUser = new User();
             newUser.screenName = req.body.screenName || "Anonymous";
             newUser.auth.local.email = email;
             newUser.auth.local.password = newUser.generateHash(password);
             newUser.save(function(err) {
-              if (err) { // Quelque chose s'est mal passé... :(
+              if (err) { // Quelque chose s"est mal passé... :(
                 throw err;
               }
               else {

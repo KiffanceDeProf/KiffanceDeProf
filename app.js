@@ -33,6 +33,7 @@ app.configure(function() {
   app.use(express.logger("short"));
   app.use(express.compress());
   app.use(passport.initialize());
+  app.use(express.cookieParser());
   app.use(express.bodyParser());
   app.use(express.json());
   app.use(express.urlencoded());

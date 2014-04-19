@@ -12,11 +12,18 @@ exports.setup = function setup(app) {
   var routes = [
     [apiPath + "/", "general#apiInfo", "auth#init", "get"],
     [apiPath + "/user/me", "users#me", "auth#init", "auth#bearerAuth", "get"],
+    [apiPath + "/user/me/cookie", "users#me", "auth#init", "auth#cookieAuth", "get"],
     [apiPath + "/admin-only", "users#adminOnly", "auth#init", "auth#isAdmin", "get"],
 
     [apiPath + "/auth/local/login", "users#generateBearer", "auth#init", "auth#localLogin", "post"],
     [apiPath + "/auth/local/register", "users#generateBearer", "auth#init", "auth#localRegister", "post"],
+
+    [apiPath + "/auth/facebook", "users#generateBearer", "auth#init", "auth#facebook", "get"],
+    [apiPath + "/auth/facebook/callback", "users#oauthPopup", "auth#init", "auth#cookieAuth", "auth#facebookCallback", "get"],
+    [apiPath + "/auth/facebook", "users#unlinkFacebook", "auth#init", "auth#bearerAuth", "delete"],
+
     [apiPath + "/auth/token/validate", "users#validate", "auth#init", "auth#bearerAuth", "get"],
+    [apiPath + "/auth/cookie", "users#generateLinkCookie", "auth#init", "auth#bearerAuth", "get"],
 
     [apiPath + "/students", "students#list", "auth#init", "get"],
     [apiPath + "/students", "students#create", "auth#init", "auth#isAdmin", "post"],

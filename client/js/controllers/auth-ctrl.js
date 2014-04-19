@@ -34,6 +34,11 @@ angular.module("k2pControllers")
             $scope.localLoginForm.$setValidity("register", false);
           });
         }
+      },
+      facebook: function() {
+        Auth.login("facebook").then(function() {
+          $location.path("/");
+        });
       }
     };
   }]);

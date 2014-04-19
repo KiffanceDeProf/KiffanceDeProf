@@ -23,8 +23,9 @@ module.exports = function(mongoose) {
       facebook: {
         id: String,
         token: String,
-        email: String,
-        name: String
+        name: String,
+        url: String,
+        profilePicture: String
       },
       twitter: {
         id: String,
@@ -40,6 +41,10 @@ module.exports = function(mongoose) {
       }
     },
     bearerToken: {
+      type: String,
+      default: null
+    },
+    linkCookie: {
       type: String,
       default: null
     },

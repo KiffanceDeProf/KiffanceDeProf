@@ -1,3 +1,4 @@
 node_modules/
 public/
 client/bower_components/
+app/passport-config.json

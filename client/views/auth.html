@@ -4,7 +4,7 @@
     <div class="text-center">
       <a href="#/auth" class="btn btn-lg btn-danger disabled">Google</a>
       <a href="#/auth" class="btn btn-lg btn-info disabled">Twitter</a>
-      <a href="#/auth" class="btn btn-lg btn-primary disabled">Facebook</a>
+      <a href="#/auth" class="btn btn-lg btn-primary" ng-click="auth.facebook()">Facebook</a>
     </div>
     <hr />
     <form ng-submit="auth.local.login(userLogin)" name="localLoginForm" ng-class="{error:localLoginForm.$error.login}">

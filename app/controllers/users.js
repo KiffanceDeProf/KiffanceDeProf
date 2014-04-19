@@ -7,19 +7,44 @@
 
 var crypto = require("crypto");
 
-module.exports = {
+var Users = {
+  _randToken: function(id) {
+    var randomHash = crypto.randomBytes(256),
+        token = crypto.createHmac("sha1", new Buffer(id)).update(randomHash).digest("base64");
+    return token;
+  },
   generateBearer: function(req, res) {
-    if(req.user._id) {
-      var randomHash = crypto.randomBytes(256),
-          token = crypto.createHmac("sha1", new Buffer(req.user._id)).update(randomHash).digest("base64");
-      req.user.bearerToken = token;
+    if(req.user && req.user._id) {
+      req.user.bearerToken = Users._randToken(req.user._id);
       req.user.save(function(err) {
         if(err) {
           throw err;
         }
         else {
           res.json({
-            token: token
+            token: req.user.bearerToken
+          });
+        }
+      });
+    }
+    else {
+      res.json(401, {
+        error: "can't log in"
+      });
+    }
+  },
+  generateLinkCookie: function(req, res) {
+    if(req.user && req.user._id) {
+      req.user.linkCookie = Users._randToken(req.user._id);
+      req.user.save(function(err) {
+        if(err) {
+          throw err;
+        }
+        else {
+          res.cookie("auth-token", req.user.linkCookie);
+          res.json({
+            status: "success",
+            message: "cookie set"
           });
         }
       });
@@ -58,6 +83,28 @@ module.exports = {
 
     res.json(resData);
   },
+  oauthPopup: function(req, res) {
+    if(req.user && req.user._id) {
+      req.user.bearerToken = Users._randToken(req.user._id);
+      req.user.save(function(err) {
+        if(err) {
+          throw err;
+        }
+        else {
+          res.writeHead(200, {
+            "Content-Type": "text/html"
+          });
+
+          res.end("<!DOCTYPE html><html><head><title>Redirecting</title><link rel=\"stylesheet\" href=\"/css/popup.css\" /></head><body><h1>Redirection en cours...</h1><script type=\"text/javascript\">window.opener.doneLogin('" + req.user.bearerToken + "')</script></body></html>"); // C'pas beau, je sais
+        }
+      });
+    }
+    else {
+      res.json(401, {
+        error: "can't log in"
+      });
+    }
+  },
   adminOnly: function(req, res) {
     res.json({
       wow: "such admin (" + req.userAuth.user + ")"
@@ -74,5 +121,25 @@ module.exports = {
         valid: false
       });
     }
+  },
+  unlinkFacebook: function(req, res) {
+    if(req.user && req.user._id) {
+      Users._unlink(req.user, "facebook").save(function(err) {
+        if(err) {
+          throw err;
+        }
+        res.json({
+          status: "done"
+        });
+      });
+    }
+  },
+  _unlink: function(user, provider) {
+    if(user.auth[provider]) {
+     user.auth[provider] = undefined;
+    }
+    return user;
   }
 };
+
+module.exports = Users;

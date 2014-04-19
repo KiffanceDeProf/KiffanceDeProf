@@ -20,9 +20,10 @@ angular.module("k2pServices")
         }
       },
       login: function(provider, options) {
+        var deferred;
         if(provider === "local") {
           if(options.email && options.password) {
-            var deferred = $q.defer();
+            deferred = $q.defer();
             $http.post("/api/auth/local/login", options)
               .success(function(data, status) {
                 if(status >= 200 && status < 400) {
@@ -48,12 +49,34 @@ angular.module("k2pServices")
             return $q.reject("invalid input");
           }
         }
+        else if(provider === "facebook") {
+          var width = 900,
+              height = 800,
+              xOffset = (screen.width - width) / 2,
+              yOffset = (screen.height - height) / 2;
+          var popup = window.open("/api/auth/" + provider, "passport-auth", "toolbar=no,status=no,location=no,menubar=no,titlebar=no,height=" + height + ",width=" + width + ",top=" + yOffset + ",left=" + xOffset);
+          deferred = $q.defer();
+          if(window.focus) { popup.focus(); }
+          window.doneLogin = function(token) {
+            auth.loggedIn = true;
+            auth.setToken(token).then(function() {
+              popup.close();
+              $rootScope.$broadcast("login");
+              deferred.resolve();
+            }, function() {
+              auth.loggedIn = false;
+              deferred.reject();
+            });
+          };
+          window.thePopup = popup;
+          return deferred.promise;
+        }
 
         return $q.reject("invalid provider or not implemented");
       },
       logout: function() {
         delete $localStorage.token;
-        return this;
+        return auth;
       },
       register: function(provider, options) {
         if(provider === "local") {
@@ -96,6 +119,43 @@ angular.module("k2pServices")
             headers: {"Authorization": "Bearer " + token }
           });
         });
+      },
+      getLinkCookie: function() {
+        var token = $localStorage.token;
+        return auth.isLogged().then(function() { 
+          return $http({
+            method: "get",
+            url: "/api/auth/cookie",
+            headers: {"Authorization": "Bearer " + token }
+          });
+        });
+      },
+      setToken: function(token) {
+        $localStorage.token = token;
+        return auth.validateToken();
+      },
+      unlink: function(provider) {
+        if($localStorage.token) {
+          var deferred = $q.defer();
+          $http({ 
+            method: "delete",
+            url: "/api/auth/" + provider,
+            headers: {"Authorization": "Bearer " + $localStorage.token }
+          }).then(function(response) {
+              if(response.data.status === "done") {
+                deferred.resolve("done");                
+              }
+              else {
+                deferred.reject("invalid");
+              }
+            }, function() {
+              deferred.reject("server error");
+            });
+          return deferred.promise;
+        }
+        else {
+          return $q.reject("no token");
+        }
       },
       validateToken: function() {
         if($localStorage.token) {

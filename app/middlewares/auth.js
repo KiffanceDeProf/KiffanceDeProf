@@ -67,5 +67,8 @@ module.exports = {
   // Passport login handlers
   localRegister: passport.authenticate("local-register"),
   localLogin: passport.authenticate("local-login"),
-  bearerAuth: passport.authenticate("bearer")
+  facebook: passport.authenticate("facebook"),
+  facebookCallback: passport.authenticate("facebook"),
+  bearerAuth: passport.authenticate("bearer"),
+  cookieAuth: passport.authenticate("cookie")
 };
