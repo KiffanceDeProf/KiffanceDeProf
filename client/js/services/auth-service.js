@@ -49,7 +49,7 @@ angular.module("k2pServices")
             return $q.reject("invalid input");
           }
         }
-        else if(provider === "facebook") {
+        else if(provider === "facebook" || provider === "twitter") {
           var width = 900,
               height = 800,
               xOffset = (screen.width - width) / 2,
@@ -76,6 +76,8 @@ angular.module("k2pServices")
       },
       logout: function() {
         delete $localStorage.token;
+        auth.loggedIn = false;
+        auth.tokenChecked = false;
         return auth;
       },
       register: function(provider, options) {

@@ -81,6 +81,10 @@ var Users = {
       }
     }
 
+    if(resData.auth.local) {
+      resData.auth.local.profilePicture = "http://www.gravatar.com/avatar/" + crypto.createHash("md5").update(resData.auth.local.email).digest("hex") + "?s=50&d=retro";
+    }
+
     res.json(resData);
   },
   oauthPopup: function(req, res) {
@@ -125,6 +129,18 @@ var Users = {
   unlinkFacebook: function(req, res) {
     if(req.user && req.user._id) {
       Users._unlink(req.user, "facebook").save(function(err) {
+        if(err) {
+          throw err;
+        }
+        res.json({
+          status: "done"
+        });
+      });
+    }
+  },
+  unlinkTwitter: function(req, res) {
+    if(req.user && req.user._id) {
+      Users._unlink(req.user, "twitter").save(function(err) {
         if(err) {
           throw err;
         }

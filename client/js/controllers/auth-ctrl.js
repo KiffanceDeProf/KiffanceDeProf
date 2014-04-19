@@ -39,6 +39,11 @@ angular.module("k2pControllers")
         Auth.login("facebook").then(function() {
           $location.path("/");
         });
+      },
+      twitter: function() {
+        Auth.login("twitter").then(function() {
+          $location.path("/");
+        });
       }
     };
   }]);

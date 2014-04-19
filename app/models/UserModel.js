@@ -31,7 +31,8 @@ module.exports = function(mongoose) {
         id: String,
         token: String,
         displayName: String,
-        username: String
+        username: String,
+        profilePicture: String
       },
       google: {
         id: String,

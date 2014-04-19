@@ -22,6 +22,10 @@ exports.setup = function setup(app) {
     [apiPath + "/auth/facebook/callback", "users#oauthPopup", "auth#init", "auth#cookieAuth", "auth#facebookCallback", "get"],
     [apiPath + "/auth/facebook", "users#unlinkFacebook", "auth#init", "auth#bearerAuth", "delete"],
 
+    [apiPath + "/auth/twitter", "users#generateBearer", "auth#init", "auth#twitter", "get"],
+    [apiPath + "/auth/twitter/callback", "users#oauthPopup", "auth#init", "auth#cookieAuth", "auth#twitterCallback", "get"],
+    [apiPath + "/auth/twitter", "users#unlinkTwitter", "auth#init", "auth#bearerAuth", "delete"],
+
     [apiPath + "/auth/token/validate", "users#validate", "auth#init", "auth#bearerAuth", "get"],
     [apiPath + "/auth/cookie", "users#generateLinkCookie", "auth#init", "auth#bearerAuth", "get"],
 

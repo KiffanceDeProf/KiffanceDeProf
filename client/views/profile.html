@@ -10,7 +10,13 @@
         <button class="btn btn-default">Connexion</button>
       </div>
       <div class="panel-body" ng-show="user.auth.local">
-        <p><strong>Mail:</strong> {{ user.auth.local.email }}</p>
+        <div class="media">
+          <img class="pull-left" class="media-object" height="50px" width="50px" ng-src="{{ user.auth.local.profilePicture }}" />
+          <div class="media-body">
+            <h4 class="media-heading">{{ user.auth.local.email }}</h4>
+            <p>Password: <strong>&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</strong></p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -24,9 +30,19 @@
         <button class="btn btn-default" ng-click="login('twitter')">Connexion</button>
       </div>
       <div class="panel-body" ng-show="user.auth.twitter">
-        <p><strong>DisplayName:</strong> {{ user.auth.twitter.displayName }}</p>
-        <p><strong>Username:</strong> @{{ user.auth.twitter.username }}</p>
+        <div class="media">
+          <img class="pull-left" class="media-object" height="50px" width="50px" ng-src="{{ user.auth.twitter.profilePicture }}" />
+          <div class="media-body">
+            <h4 class="media-heading">{{ user.auth.twitter.displayName }} <small>@{{ user.auth.twitter.username }}</small></h4>
+            <a href="http://twitter.com/{{ user.auth.twitter.username }}">http://twitter.com/{{ user.auth.twitter.username }}</p>
+          </div>
+        </div>
       </div>
+      <div class="panel-footer" ng-show="user.auth.twitter">
+        <a href="{{ user.auth.twitter.url }}" class="btn btn-default">Profile</a>
+        <a href="#/profile" ng-click="unlink('twitter')" class="btn btn-danger">Unlink</a>
+      </div>
+    </div>
     </div>
   </div>
 </div>
@@ -42,7 +58,7 @@
       </div>
       <div class="panel-body" ng-show="user.auth.facebook">
         <div class="media">
-          <img class="pull-left" class="media-object" ng-src="{{ user.auth.facebook.profilePicture }}" />
+          <img class="pull-left" class="media-object" height="50px" width="50px" ng-src="{{ user.auth.facebook.profilePicture }}" />
           <div class="media-body">
             <h4 class="media-heading">{{ user.auth.facebook.name }}</h4>
             <a href="{{ user.auth.facebook.url }}">{{ user.auth.facebook.url }}</p>

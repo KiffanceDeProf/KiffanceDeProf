@@ -9,7 +9,7 @@ var LocalStrategy = require("passport-local").Strategy,
     BearerStrategy = require("passport-http-bearer").Strategy,
     CookieStrategy = require("./lib/CookieStrategy").Strategy,
     FacebookStrategy = require("passport-facebook").Strategy,
-    // TwitterStrategy = require("passport-twitter").Strategy,
+    TwitterStrategy = require("passport-twitter").Strategy,
     // GoogleStrategy = require("passport-google").Strategy;
     PassportConfig = require("./passport-config.json");
 
@@ -69,61 +69,125 @@ module.exports.setup = function(passport, mongoose) {
   passport.use("facebook", new FacebookStrategy({
     clientID: PassportConfig.facebook.clientId,
     clientSecret: PassportConfig.facebook.clientSecret,
-    callbackURL: "http://localhost:1337/api/auth/facebook/callback",
+    callbackURL: "http://sandhose.fr:1337/api/auth/facebook/callback",
     passReqToCallback: true,
     display: "popup",
     profileFields: ["id", "displayName", "photos", "profileUrl"]
   }, function(req, accessToken, refreshToken, profile, done) {
     process.nextTick(function() {
-        User.findOne({ "auth.facebook.id": profile.id }, function(err, user) {
-          if (err) {
-            return done(err);
-          }
-          else if(req.user) {
-            req.user.auth.facebook = {
-              id: profile.id,
-              token: accessToken,
-              name: profile.displayName,
-              url: profile.profileUrl,
-              profilePicture: profile.photos[0].value || null
-            };
+      User.findOne({ "auth.facebook.id": profile.id }, function(err, user) {
+        if (err) {
+          return done(err);
+        }
+        else if(req.user) {
+          req.user.auth.facebook = {
+            id: profile.id,
+            token: accessToken,
+            name: profile.displayName,
+            url: profile.profileUrl,
+            profilePicture: profile.photos[0].value || null
+          };
 
-            req.user.save(function(err) {
-              if(err) {
-                throw err;
-              }
-              else {
-                return done(null, req.user);
-              }
-            });
-          }
-          else if (user) {
-            user.auth.facebook.name = profile.displayName;
-            user.save();
-            return done(null, user);
-          }
-          else { // Crée l"utilisateur
-            var newUser = new User();
-            newUser.screenName = profile.username || "Anonymous";
-            newUser.auth.facebook = {
-              id: profile.id,
-              token: accessToken,
-              name: profile.displayName,
-              url: profile.profileUrl,
-              profilePicture: profile.photos[0] || null
-            };
-            newUser.save(function(err) {
-              if (err) { // Quelque chose s"est mal passé... :(
-                throw err;
-              }
-              else {
-                return done(null, newUser);
-              }
-            });
-          }
+          req.user.save(function(err) {
+            if(err) {
+              throw err;
+            }
+            else {
+              return done(null, req.user);
+            }
+          });
+        }
+        else if (user) {
+          user.auth.facebook.name = profile.displayName;
+          user.save();
+          return done(null, user);
+        }
+        else { // Crée l"utilisateur
+          var newUser = new User();
+          newUser.screenName = profile.username || "Anonymous";
+          newUser.auth.facebook = {
+            id: profile.id,
+            token: accessToken,
+            name: profile.displayName,
+            url: profile.profileUrl,
+            profilePicture: profile.photos[0] || null
+          };
+          newUser.save(function(err) {
+            if (err) { // Quelque chose s'est mal passé... :(
+              throw err;
+            }
+            else {
+              return done(null, newUser);
+            }
+          });
+        }
 
-        });
       });
+    });
+  }));
+
+  /**
+   * Twitter Strategy
+   */
+  passport.use("twitter", new TwitterStrategy({
+    consumerKey: PassportConfig.twitter.consumerKey,
+    consumerSecret: PassportConfig.twitter.consumerSecret,
+    callbackURL: "http://sandhose.fr:1337/api/auth/twitter/callback",
+    passReqToCallback: true,
+    display: "popup",
+    profileFields: ["id", "displayName", "photos", "profileUrl"]
+  }, function(req, accessToken, refreshToken, profile, done) {
+    process.nextTick(function() {
+      User.findOne({ "auth.twitter.id": profile.id }, function(err, user) {
+        if (err) {
+          return done(err);
+        }
+        else if(req.user) {
+          req.user.auth.twitter = {
+            id: profile.id,
+            token: accessToken,
+            displayName: profile.displayName,
+            username: profile.username,
+            profilePicture: profile.photos[0].value || null
+          };
+
+          req.user.save(function(err) {
+            if(err) {
+              throw err;
+            }
+            else {
+              return done(null, req.user);
+            }
+          });
+        }
+        else if (user) {
+          user.auth.twitter.displayName = profile.displayName;
+          user.auth.twitter.username = profile.username;
+          user.save();
+          return done(null, user);
+        }
+        else { // Crée l'utilisateur
+          var newUser = new User();
+          newUser.screenName = profile.username || "Anonymous";
+          newUser.auth.twitter = {
+            id: profile.id,
+            token: accessToken,
+            displayName: profile.displayName,
+            username: profile.username,
+            profilePicture: profile.photos[0].value || null
+          };
+          newUser.save(function(err) {
+            if (err) {
+              throw err;
+            }
+            else {
+              return done(null, newUser);
+            }
+          });
+        }
+
+      });
+    });
   }));
 
   /**
@@ -132,7 +196,7 @@ module.exports.setup = function(passport, mongoose) {
    */
 
   // Register
-  passport.use("local-register", new LocalStrategy({
+  passport.use("local-register", new LocalStrategy({ // @TODO: Local link
       usernameField : "email",
       passwordField : "password",
       passReqToCallback: true // Pour pouvoir set le pseudo

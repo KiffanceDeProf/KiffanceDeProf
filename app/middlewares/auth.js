@@ -69,6 +69,8 @@ module.exports = {
   localLogin: passport.authenticate("local-login"),
   facebook: passport.authenticate("facebook"),
   facebookCallback: passport.authenticate("facebook"),
+  twitter: passport.authenticate("twitter"),
+  twitterCallback: passport.authenticate("twitter"),
   bearerAuth: passport.authenticate("bearer"),
   cookieAuth: passport.authenticate("cookie")
 };
