@@ -49,7 +49,7 @@ angular.module("k2pServices")
             return $q.reject("invalid input");
           }
         }
-        else if(provider === "facebook" || provider === "twitter") {
+        else if(provider === "facebook" || provider === "twitter" || provider === "google") {
           var width = 900,
               height = 800,
               xOffset = (screen.width - width) / 2,

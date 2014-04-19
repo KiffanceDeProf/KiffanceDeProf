@@ -150,6 +150,18 @@ var Users = {
       });
     }
   },
+  unlinkGoogle: function(req, res) {
+    if(req.user && req.user._id) {
+      Users._unlink(req.user, "google").save(function(err) {
+        if(err) {
+          throw err;
+        }
+        res.json({
+          status: "done"
+        });
+      });
+    }
+  },
   _unlink: function(user, provider) {
     if(user.auth[provider]) {
      user.auth[provider] = undefined;

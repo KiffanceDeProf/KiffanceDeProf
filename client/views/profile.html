@@ -19,6 +19,28 @@
         </div>
       </div>
     </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <h3 class="panel-title">Facebook</h3>
+      </div>
+      <div class="panel-body" ng-hide="user.auth.facebook">
+        <button class="btn btn-default" ng-click="login('facebook')">Connexion</button>
+      </div>
+      <div class="panel-body" ng-show="user.auth.facebook">
+        <div class="media">
+          <img class="pull-left" class="media-object" height="50px" width="50px" ng-src="{{ user.auth.facebook.profilePicture }}" />
+          <div class="media-body">
+            <h4 class="media-heading">{{ user.auth.facebook.name }}</h4>
+            <a href="{{ user.auth.facebook.url }}">{{ user.auth.facebook.url }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer" ng-show="user.auth.facebook">
+        <a href="{{ user.auth.facebook.url }}" class="btn btn-default">Profile</a>
+        <a href="#/profile" ng-click="unlink('facebook')" class="btn btn-danger">Unlink</a>
+      </div>
+    </div>
   </div>
 
   <div class="col-lg-6">
@@ -34,45 +56,16 @@
           <img class="pull-left" class="media-object" height="50px" width="50px" ng-src="{{ user.auth.twitter.profilePicture }}" />
           <div class="media-body">
             <h4 class="media-heading">{{ user.auth.twitter.displayName }} <small>@{{ user.auth.twitter.username }}</small></h4>
-            <a href="http://twitter.com/{{ user.auth.twitter.username }}">http://twitter.com/{{ user.auth.twitter.username }}</p>
+            <a href="http://twitter.com/{{ user.auth.twitter.username }}">http://twitter.com/{{ user.auth.twitter.username }}</a>
           </div>
         </div>
       </div>
       <div class="panel-footer" ng-show="user.auth.twitter">
-        <a href="{{ user.auth.twitter.url }}" class="btn btn-default">Profile</a>
+        <a href="http://twitter.com/{{ user.auth.twitter.username }}" class="btn btn-default">Profile</a>
         <a href="#/profile" ng-click="unlink('twitter')" class="btn btn-danger">Unlink</a>
       </div>
     </div>
-    </div>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-lg-6">
-    <div class="panel panel-default">
-      <div class="panel-heading clearfix">
-        <h3 class="panel-title">Facebook</h3>
-      </div>
-      <div class="panel-body" ng-hide="user.auth.facebook">
-        <button class="btn btn-default" ng-click="login('facebook')">Connexion</button>
-      </div>
-      <div class="panel-body" ng-show="user.auth.facebook">
-        <div class="media">
-          <img class="pull-left" class="media-object" height="50px" width="50px" ng-src="{{ user.auth.facebook.profilePicture }}" />
-          <div class="media-body">
-            <h4 class="media-heading">{{ user.auth.facebook.name }}</h4>
-            <a href="{{ user.auth.facebook.url }}">{{ user.auth.facebook.url }}</p>
-          </div>
-        </div>
-      </div>
-      <div class="panel-footer" ng-show="user.auth.facebook">
-        <a href="{{ user.auth.facebook.url }}" class="btn btn-default">Profile</a>
-        <a href="#/profile" ng-click="unlink('facebook')" class="btn btn-danger">Unlink</a>
-      </div>
-    </div>
-  </div>
-  
-  <div class="col-lg-6">
     <div class="panel panel-default">
       <div class="panel-heading clearfix">
         <h3 class="panel-title">Google</h3>
@@ -81,8 +74,17 @@
         <button class="btn btn-default" ng-click="login('google')">Connexion</button>
       </div>
       <div class="panel-body" ng-show="user.auth.google">
-        <p><strong>Mail:</strong> {{ user.auth.google.email }}</p>
-        <p><strong>Name:</strong> {{ user.auth.google.name }}</p>
+        <div class="media">
+          <img class="pull-left" class="media-object" height="50px" width="50px" ng-src="{{ user.auth.google.profilePicture }}" />
+          <div class="media-body">
+            <h4 class="media-heading">{{ user.auth.google.displayName }}</h4>
+            <a href="{{ user.auth.google.url }}">{{ user.auth.google.url }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer" ng-show="user.auth.google">
+        <a href="{{ user.auth.google.url }}" class="btn btn-default">Profile</a>
+        <a href="#/profile" ng-click="unlink('google')" class="btn btn-danger">Unlink</a>
       </div>
     </div>
   </div>

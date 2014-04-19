@@ -71,6 +71,9 @@ module.exports = {
   facebookCallback: passport.authenticate("facebook"),
   twitter: passport.authenticate("twitter"),
   twitterCallback: passport.authenticate("twitter"),
+  google: passport.authenticate("google", { scope: ["https://www.googleapis.com/auth/userinfo.profile",
+                                                    "https://www.googleapis.com/auth/userinfo.email"] }),
+  googleCallback: passport.authenticate("google"),
   bearerAuth: passport.authenticate("bearer"),
   cookieAuth: passport.authenticate("cookie")
 };

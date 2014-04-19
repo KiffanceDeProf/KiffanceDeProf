@@ -38,7 +38,9 @@ module.exports = function(mongoose) {
         id: String,
         token: String,
         email: String,
-        name: String
+        displayName: String,
+        profilePicture: String,
+        url: String
       }
     },
     bearerToken: {
