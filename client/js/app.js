@@ -23,6 +23,10 @@ angular
         templateUrl: "views/profile.html",
         controller: "ProfileCtrl"
       })
+      .when("/games", {
+        templateUrl: "views/gameList.html",
+        controller: "GameListCtrl"
+      })
       .when("/", {
         templateUrl: "views/home.html",
         controller: "HomeCtrl"

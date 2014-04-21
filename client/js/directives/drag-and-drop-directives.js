@@ -23,7 +23,9 @@ angular.module("k2pDirectives")
     restrict: "A",
     link: function(scope, element, attrs)  {
       attrs.$set("draggable", "true");
-      scope.dragStyle = attrs.kpDragStyle;
+      if(attrs.kpDragStyle) {
+        scope.dragStyle = attrs.kpDragStyle;
+      }
       element.bind("dragstart", function(evt) {
         $rootScope.draggedElement = $parse(attrs.kpDrag)(scope);
         dragStart(evt, element, scope.dragStyle);
@@ -57,7 +59,9 @@ angular.module("k2pDirectives")
   return {
     restrict: "A",
     link: function(scope, element, attrs) {
-      scope.dropStyle = attrs.kpDropStyle;
+      if(attrs.kpDropStyle) {
+        scope.dropStyle = attrs.kpDropStyle;
+      }
       element.bind("dragenter", function(evt) {
         dragEnter(evt, element, scope.dropStyle);
       });

@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("k2pControllers")
-  .controller("ClassroomCtrl", ["$scope", "$route", "Courses", function ($scope, $route, Courses) {
+  .controller("ClassroomCtrl", ["$scope", "$route", "Courses", function classroomCtrl($scope, $route, Courses) {
     $scope.classroom = [
       [ {}, {}, {}, {}, {}, {}, {}, {}, {}, {} ],
       [ {heater: true}, {table: true}, {table: true}, {}, {table: true}, {table: true}, {}, {table: true}, {table: true}, {window: true} ],
@@ -25,22 +25,23 @@ angular.module("k2pControllers")
       }
     }
 
-    $scope.selectItem = function(row, col) {
+    $scope.selectItem = function selectItem(row, col) {
       $scope.selectedItem = $scope.classroom[row][col];
       $scope.selectedItem.coord = [row, col];
       $scope.selectStudent($scope.classroom[row][col].student);
     };
 
-    $scope.selectStudent = function(studentId) {
+    $scope.selectStudent = function selectStudent(studentId) {
       $scope.selectedStudent = studentId;
     };
 
-    $scope.formatStudentName = function(student) {
+    $scope.formatStudentName = function formatStudentName(student) {
+      if(typeof student === "number") { student = $scope.students[student]; }
       if(!student || !student.name || !student.name.first || !student.name.last) { return; }
       return student.name.first + " " + student.name.last.substring(0,1) + ".";
     };
 
-    $scope.$on("dropEvent", function(evt, studentId, dropCoord) {
+    $scope.$on("dropEvent", function drop(evt, studentId, dropCoord) {
       $scope.$apply(function() {
         for(var i in $scope.classroom) {
           var r = $scope.classroom[i];

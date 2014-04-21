@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-lg-6 new-game">
+    <h2>New game</h2>
+
+    <div class="list-group">
+      <a class="list-group-item" href="" ng-click="startNewGame(course._id)" ng-repeat="course in courses">
+        <h4>{{ course.name }}</h4>
+        <p>{{ course.description }}</p>
+      </a>
+    </div>
+  </div>
+
+  <div class="col-lg-6 my-games">
+    <h2>My games</h2>
+
+    <div class="list-group">
+      <a class="list-group-item" href="#/games/{{ game._id }}" ng-repeat="game in games">
+        <h4>{{ coursesWithID[game.course].name }}</h4>
+        <p>{{ coursesWithID[game.course].description }}</p>
+      </a>
+    </div>
+  </div>
+</div>

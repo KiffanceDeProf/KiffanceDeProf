@@ -57,11 +57,11 @@ exports.setup = function setup(app) {
     [apiPath + "/attributes/:attributeId", "attributes#delete", "auth#init", "auth#isAdmin", "delete"],
 
     
-    // [apiPath + "/games", "game#list", "auth#init", "get"],
-    // [apiPath + "/games", "game#create", "auth#init", "post"],
-    // [apiPath + "/games/:gameId", "game#find", "auth#init", "get"],
-    // [apiPath + "/games/:gameId", "game#update", "auth#init", "auth#isAdmin", "put"],
-    // [apiPath + "/games/:gameId", "game#delete", "auth#init", "auth#isAdmin", "delete"],
+    [apiPath + "/games", "game#list", "auth#init", "auth#bearerAuth", "get"],
+    [apiPath + "/games", "game#create", "auth#init", "auth#bearerAuth", "post"],
+    [apiPath + "/games/:gameId", "game#find", "auth#init", "auth#bearerAuth", "get"],
+    [apiPath + "/games/:gameId", "game#update", "auth#init", "auth#bearerAuth", "put"],
+    [apiPath + "/games/:gameId", "game#delete", "auth#init", "auth#bearerAuth", "delete"],
     // [apiPath + "/games/:gameId/trimester", "game#listTrimesters", "auth#init", "get"],
     // [apiPath + "/games/:gameId/trimester", "game#createTrimester", "auth#init", "post"],
     // [apiPath + "/games/:gameId/trimester/:trimesterId", "game#getTrimester", "auth#init", "get"],
@@ -73,7 +73,7 @@ exports.setup = function setup(app) {
     
   ];
 
-  expressPath(app, routes, { verbose: (app.settings.env === "development") });
+  expressPath(app, routes, { verbose: (app.settings.env !== "development") });
 
   console.log("✔ Routes loaded");
 };

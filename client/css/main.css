@@ -96,17 +96,6 @@ body {
   background-color: #aaa;
 }
 
-.unplaced-students {
-  min-height: 500px;
-}
-
-.unplaced-students .student-name {
-  margin: 4px 0;
-  padding: 4px;
-  background-color: #fff;
-  border: 1px solid #EEE;
-}
-
 .classroom-table .student-name {
   font-size: 10px;
   height: 40px;

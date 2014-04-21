@@ -21,9 +21,6 @@ module.exports = function(mongoose) {
       required: true
     },
     trimester: [{
-      min: 1,
-      max: 3,
-      required: true,
       overallScore: {
         type: Number,
         required: true

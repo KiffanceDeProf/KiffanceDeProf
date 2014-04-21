@@ -136,6 +136,9 @@ angular.module("k2pServices")
         $localStorage.token = token;
         return auth.validateToken();
       },
+      getToken: function() {
+        return $localStorage.token;
+      },
       unlink: function(provider) {
         if($localStorage.token) {
           var deferred = $q.defer();

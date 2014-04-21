@@ -1,14 +1,15 @@
 <div class="row">
   <div class="col-lg-2" kp-drop="null" kp-drop-style="drop">
     <h4>Élèves:</h4>
-    <div class="unplaced-students">
-      <div ng-repeat="student in students" 
+    <div class="list-group">
+      <a ng-repeat="student in students" 
            kp-drag="$index" 
-           kp-drag-style="drag" 
-           ng-hide="student.coord" 
-           class="student-name">
+           ng-hide="student.coord"
+           ng-click="selectStudent($index)"
+           ng-class="{ active: selectedStudent === $index }"
+           class="list-group-item">
         {{student.name.first}} {{student.name.last}}
-      </div>
+      </a>
     </div>
   </div>
   <div class="col-lg-7">
@@ -25,10 +26,10 @@
             heater: item.heater == true,
             teacherDesk: item.teacherDesk == true,
             selected: $parent.$index == selectedItem.coord[0] && $index == selectedItem.coord[1]}"
-          kp-drop="[$parent.$index, $index]" kp-drop-style="drop">
+          kp-drop="[$parent.$index, $index]">
             <div class="student-name" 
                  ng-show="item.student !== undefined"
-                 kp-drag="item.student" kp-drag-stype="drag">{{ formatStudentName(students[item.student]) }}</span>
+                 kp-drag="item.student">{{ formatStudentName(item.student) }}</span>
         </td>
       </tr>
     </table>
@@ -44,7 +45,7 @@
       </ul>
     </div>
 
-    <div class="selected-student-info" ng-show="selectedStudent">
+    <div class="selected-student-info" ng-show="selectedStudent !== undefined">
       <h3>Selected student:</h3>
       <ul>
         <li><strong>Name:</strong> {{ students[selectedStudent].name.first }} {{ students[selectedStudent].name.last }}</li>
