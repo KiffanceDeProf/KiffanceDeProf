@@ -16,9 +16,9 @@
     "url": "https://github.com/KiffanceDeProf/backend/issues"
   },
   "dependencies": {
-    "express": "~3.4.8",
+    "express": "^4.0.0",
     "mongoose": "~3.8.5",
-    "express-path": "~0.2.3",
+    "express-path": "^0.3.7",
     "passport": "~0.2.0",
     "passport-local": "~0.1.6",
     "passport-facebook": "~1.0.2",
@@ -26,7 +26,13 @@
     "bcrypt": "~0.7.7",
     "passport-http-bearer": "~1.0.1",
     "bower": "~1.2.8",
-    "passport-google-oauth": "^0.1.5"
+    "passport-google-oauth": "^0.1.5",
+    "compression": "^1.0.1",
+    "cookie-parser": "^1.0.1",
+    "body-parser": "^1.0.2",
+    "express-session": "^1.0.3",
+    "serve-static": "^1.0.4",
+    "morgan": "^1.0.0"
   },
   "devDependencies": {
     "grunt": "~0.4.2",
