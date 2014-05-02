@@ -200,15 +200,19 @@ body {
 }
 
 
-
-
+.row{
+    margin-top:25px;
+margin-bottom: 25px;
+}
+    	
 
 .nav>li>a:hover, .nav>li>a:focus, .nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
     background:transparent;
 }
 .dropdown {
+    vertical-align;
     background:transparent;
-    width:150px;    
+    width:80px;    
 }
 .dropdown-menu>li>a {
     color:#428bca;
