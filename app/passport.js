@@ -69,7 +69,7 @@ module.exports.setup = function(passport, mongoose) {
   passport.use("facebook", new FacebookStrategy({
     clientID: PassportConfig.facebook.clientId,
     clientSecret: PassportConfig.facebook.clientSecret,
-    callbackURL: "http://sandhose.fr:1337/api/auth/facebook/callback",
+    callbackURL: "http://localhost:1337/api/auth/facebook/callback",
     passReqToCallback: true,
     display: "popup",
     profileFields: ["id", "displayName", "photos", "profileUrl"]
@@ -132,7 +132,7 @@ module.exports.setup = function(passport, mongoose) {
   passport.use("twitter", new TwitterStrategy({
     consumerKey: PassportConfig.twitter.consumerKey,
     consumerSecret: PassportConfig.twitter.consumerSecret,
-    callbackURL: "http://sandhose.fr:1337/api/auth/twitter/callback",
+    callbackURL: "http://localhost:1337/api/auth/twitter/callback",
     passReqToCallback: true,
     profileFields: ["id", "displayName", "photos", "profileUrl"]
   }, function(req, accessToken, refreshToken, profile, done) {
@@ -195,7 +195,7 @@ module.exports.setup = function(passport, mongoose) {
   passport.use("google", new GoogleStrategy({
     clientID: PassportConfig.google.clientId,
     clientSecret: PassportConfig.google.clientSecret,
-    callbackURL: "http://sandhose.fr:1337/api/auth/google/callback",
+    callbackURL: "http://localhost:1337/api/auth/google/callback",
     passReqToCallback: true
   }, function(req, accessToken, refreshToken, profile, done) {
     process.nextTick(function() {

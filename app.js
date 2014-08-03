@@ -38,9 +38,14 @@ app.set("passport", passport);
 app.use(morgan("short"));
 app.use(compress);
 app.use(cookieParser("yolo"));
-app.use(session());
+app.use(session({
+  secret: "rainbow dash is the best pony",
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(passport.initialize());
-app.use(bodyParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 require("./app/passport").setup(passport, mongoose);
 routes.setup(app);
